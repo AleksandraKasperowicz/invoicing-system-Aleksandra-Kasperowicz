@@ -12,10 +12,11 @@ public class InMemoryDatabase implements DataBase {
 
   final Map<Integer, Invoice> invoices = new HashMap<>();
   private int currentId = 0;
+
   @Override
   public int save(Invoice invoice) {
     invoice.setId(getNextId());
-    invoices.put(invoice.getId(),invoice);
+    invoices.put(invoice.getId(), invoice);
     return invoice.getId();
   }
 
@@ -31,17 +32,21 @@ public class InMemoryDatabase implements DataBase {
 
   @Override
   public void update(int id, Invoice updatedInvoice) {
-    if(!invoices.containsKey(id)) {
+
+    if (!invoices.containsKey(id)) {
       throw new IllegalArgumentException("Faktura o numerze: " + id + "nie istnieje");
     }
+
     updatedInvoice.setId(id);
     invoices.put(id, updatedInvoice);
   }
+
   @Override
   public void delete(int id) {
     invoices.remove(id);
   }
-  private int getNextId(){
+
+  private int getNextId() {
     return ++currentId;
   }
 }

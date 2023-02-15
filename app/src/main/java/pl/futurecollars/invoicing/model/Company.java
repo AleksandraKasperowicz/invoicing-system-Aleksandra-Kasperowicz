@@ -1,12 +1,18 @@
 package pl.futurecollars.invoicing.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 public class Company {
-  private int id;
+
+  private String id;
   private String taxIdentificationNumber;
   private String address;
+
+  public Company(String id, String taxIdentificationNumber, String address) {
+    this.id = id;
+    this.taxIdentificationNumber = taxIdentificationNumber;
+    this.address = address;
+  }
 }
+

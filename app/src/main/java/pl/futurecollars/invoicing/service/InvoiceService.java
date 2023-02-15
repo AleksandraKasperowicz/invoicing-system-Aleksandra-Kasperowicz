@@ -33,14 +33,18 @@ public class InvoiceService {
   public void delete(int id) {
     database.delete(id);
   }
-  public List<Invoice> getInvoicesByBuyer(String buyer){
+
+  public List<Invoice> getInvoicesByBuyer(String buyer) {
+
     List<Invoice> allInvoices = getAll();
     return allInvoices
         .stream()
         .filter(i -> i.getBuyer().equals(buyer))
         .collect(Collectors.toList());
   }
-  public List<Invoice> getInvoicesBySeller(String seller){
+
+  public List<Invoice> getInvoicesBySeller(String seller) {
+
     List<Invoice> allInvoices = getAll();
     return allInvoices
         .stream()

@@ -1,15 +1,19 @@
 package pl.futurecollars.invoicing.model;
 
 import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 public class Invoice {
+
   private int id;
-  private String buyer;
-  private String seller;
+  private Company buyer;
+  private Company seller;
   private List<InvoiceEntry> entries;
 
+  public Invoice(Company buyer, Company seller, List<InvoiceEntry> entries) {
+    this.buyer = buyer;
+    this.seller = seller;
+    this.entries = entries;
+  }
 }

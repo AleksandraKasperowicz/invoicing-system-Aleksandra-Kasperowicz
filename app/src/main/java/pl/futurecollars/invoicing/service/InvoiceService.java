@@ -3,14 +3,14 @@ package pl.futurecollars.invoicing.service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import pl.futurecollars.invoicing.db.DataBase;
+import pl.futurecollars.invoicing.db.Database;
 import pl.futurecollars.invoicing.model.Invoice;
 
 public class InvoiceService {
 
-  private final DataBase database;
+  private final Database database;
 
-  public InvoiceService(DataBase database) {
+  public InvoiceService(Database database) {
     this.database = database;
   }
 
@@ -34,21 +34,21 @@ public class InvoiceService {
     database.delete(id);
   }
 
-  public List<Invoice> getInvoicesByBuyer(String buyer) {
+  public List<Invoice> getInvoicesByBuyerId(String id) {
 
     List<Invoice> allInvoices = getAll();
     return allInvoices
         .stream()
-        .filter(i -> i.getBuyer().equals(buyer))
+        .filter(i -> i.getBuyer().getId().equals(id))
         .collect(Collectors.toList());
   }
 
-  public List<Invoice> getInvoicesBySeller(String seller) {
+  public List<Invoice> getInvoicesBySellerId(String id) {
 
     List<Invoice> allInvoices = getAll();
     return allInvoices
         .stream()
-        .filter(i -> i.getSeller().equals(seller))
+        .filter(i -> i.getSeller().getId().equals(id))
         .collect(Collectors.toList());
   }
 }

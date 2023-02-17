@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import pl.futurecollars.invoicing.db.DataBase;
+import pl.futurecollars.invoicing.db.Database;
 import pl.futurecollars.invoicing.model.Invoice;
 
-public class InMemoryDatabase implements DataBase {
+public class InMemoryDatabase implements Database {
 
   final Map<Integer, Invoice> invoices = new HashMap<>();
   private int currentId = 0;
@@ -34,7 +34,7 @@ public class InMemoryDatabase implements DataBase {
   public void update(int id, Invoice updatedInvoice) {
 
     if (!invoices.containsKey(id)) {
-      throw new IllegalArgumentException("Faktura o numerze: " + id + "nie istnieje");
+      throw new IllegalArgumentException("Faktura o numerze: " + id + " nie istnieje");
     }
 
     updatedInvoice.setId(id);

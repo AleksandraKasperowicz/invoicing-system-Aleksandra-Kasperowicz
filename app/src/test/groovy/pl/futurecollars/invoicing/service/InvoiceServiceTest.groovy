@@ -24,7 +24,7 @@ class InvoiceServiceTest extends Specification {
         ids == (1..invoices.size()).collect()
         ids.forEach({ assert service.getById(it).isPresent() })
         ids.forEach({ assert service.getById(it).get().getId() == it })
-        ids.forEach({ assert service.getById(it).get() == invoices.get(it - 1) })
+        ids.forEach({ assert service.getById(it).get() == invoices.get(it -1 as int) })
     }
 
     def "should return empty optional"() {
@@ -43,12 +43,12 @@ class InvoiceServiceTest extends Specification {
 
         then:
         service.getAll().size() == invoices.size()
-        service.getAll().forEach({ assert it == invoices.get(it.getId() - 1) })
+        service.getAll().forEach({ assert it == invoices.get(it.getId() -1 as int) })
     }
 
     def "should update invoice"() {
         given:
-        int id = service.save(invoices.get(2))
+        long id = service.save(invoices.get(2))
 
         when:
         service.update(id, invoices.get(11))

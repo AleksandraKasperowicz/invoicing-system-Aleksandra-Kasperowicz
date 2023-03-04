@@ -4,6 +4,17 @@
 
 package pl.futurecollars.invoicing;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
+import pl.futurecollars.invoicing.db.Database;
+import pl.futurecollars.invoicing.db.FileDatabase;
+import pl.futurecollars.invoicing.model.Company;
+import pl.futurecollars.invoicing.model.Invoice;
+import pl.futurecollars.invoicing.model.InvoiceEntry;
+import pl.futurecollars.invoicing.model.Vat;
+import pl.futurecollars.invoicing.service.FileService;
+
 public class App {
 
   public String getGreeting() {
@@ -12,5 +23,31 @@ public class App {
 
   public static void main(String[] args) {
     System.out.println(new App().getGreeting());
+    Database database = new FileDatabase(new FileService());
+
+    Invoice invoice = Invoice.builder()
+        .buyer(new Company("1234", "88888888", "Warszawa"))
+        .seller(new Company("4321", "7777777", "Poznań"))
+        .data(LocalDate.now())
+        .entries(List.of(
+            InvoiceEntry.builder().price(BigDecimal.valueOf(40)).description("programming system").rateVat(Vat.VAT8).valueVat(BigDecimal.valueOf(3.2))
+                .build()))
+        .build();
+
+    database.save(invoice);
+    database.save(invoice);
+
+    Invoice invoice1 = database.getById(5).orElse(new Invoice());
+
+    invoice1.setBuyer(new Company("1234", "88888888", "Gdańsk"));
+    invoice1.setSeller(new Company("4321", "1", "Poznań"));
+    invoice1.setData(LocalDate.now());
+
+    database.update(invoice1.getId(), invoice1);
+
+    System.out.println(invoice1);
+
+    database.delete(2);
+
   }
 }

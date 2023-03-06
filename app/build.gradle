@@ -47,6 +47,7 @@ checkstyle {
     maxWarnings = 0
     maxErrors = 0
 }
+
 test {
     finalizedBy jacocoTestReport // report is always generated after tests run
 }

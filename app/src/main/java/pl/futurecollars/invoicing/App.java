@@ -4,6 +4,9 @@
 
 package pl.futurecollars.invoicing;
 
+import static pl.futurecollars.invoicing.Configuration.DB_PATH;
+import static pl.futurecollars.invoicing.Configuration.ID_DB_PATH;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,7 +26,7 @@ public class App {
 
   public static void main(String[] args) {
     System.out.println(new App().getGreeting());
-    Database database = new FileDatabase(new FileService());
+    Database database = new FileDatabase(new FileService(), DB_PATH, ID_DB_PATH);
 
     Invoice invoice = Invoice.builder()
         .buyer(new Company("1234", "88888888", "Warszawa"))

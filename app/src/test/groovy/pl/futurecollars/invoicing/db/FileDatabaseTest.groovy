@@ -12,16 +12,17 @@ class FileDatabaseTest extends AbstractDatabaseTest {
     List<Invoice> invoices = (1..12).collect { invoice(it)}
 
     def setup() {
-    new File(Configuration.DB_PATH).delete()
-    new File(Configuration.ID_DB_PATH).delete()
+
         database = initDatabase()
         invoices.collect({database.save(it)})
     }
 
     @Override
     Database initDatabase() {
+        def invoicePath = File.createTempFile("tmpInvoices", 'json')
+        def idPath = File.createTempFile("tmpTxt", 'txt')
         def fileService = new FileService()
-        return new FileDatabase(fileService)
+        return new FileDatabase(fileService, invoicePath.getPath(), idPath.getPath())
     }
 
 

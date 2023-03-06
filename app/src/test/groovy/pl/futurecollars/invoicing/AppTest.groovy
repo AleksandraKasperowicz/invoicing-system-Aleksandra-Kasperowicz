@@ -11,9 +11,20 @@ class AppTest extends Specification {
         def app = new App()
 
         when:
-        def result = app.greeting
+        def result = app.getGreeting()
 
         then:
         result != null
+
+        and:
+        app.main()
     }
+
+//    def "dummy test to cover main"() {
+//        setup:
+//        def app = new App()
+//
+//        and:
+//        app.main()
+
 }

@@ -1,4 +1,4 @@
-package pl.futurecollars.invoicing.Controller;
+package pl.futurecollars.invoicing.controller;
 
 import java.util.List;
 import lombok.Generated;
@@ -24,7 +24,6 @@ public class InvoiceController {
 
   final InvoiceService invoiceService = new InvoiceService(new FileDatabase(new FileService(), Configuration.DB_PATH, Configuration.ID_DB_PATH));
 
-
   @GetMapping("/getAll")
   public List<Invoice> getAll() {
     return invoiceService.getAll();
@@ -45,7 +44,7 @@ public class InvoiceController {
   @DeleteMapping("/{id}")
   public ResponseEntity<?> deleteById(@PathVariable long id) {
     invoiceService.delete(id);
-    return ResponseEntity.ok(("ok"));
+    return ResponseEntity.ok("ok");
   }
 
   @PutMapping("/update/{id}")

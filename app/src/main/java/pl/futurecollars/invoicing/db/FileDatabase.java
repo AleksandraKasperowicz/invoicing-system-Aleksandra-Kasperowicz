@@ -59,10 +59,10 @@ public class FileDatabase implements Database {
         .filter(invoice -> invoice.getId().equals(id))
         .findFirst()
         .ifPresentOrElse(invoice -> {
-              invoice.setData(updatedInvoice.getData());
-              invoice.setBuyer(updatedInvoice.getBuyer());
-              invoice.setSeller(updatedInvoice.getSeller());
-            },
+          invoice.setData(updatedInvoice.getData());
+          invoice.setBuyer(updatedInvoice.getBuyer());
+          invoice.setSeller(updatedInvoice.getSeller());
+        },
             () -> {
               throw new IllegalArgumentException("Faktura o numerze: " + id + " nie istnieje");
             });

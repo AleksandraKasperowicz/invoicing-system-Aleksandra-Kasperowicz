@@ -8,17 +8,17 @@ import pl.futurecollars.invoicing.service.FileService;
 
 public class FileDatabase implements Database {
 
-  FileService fileService;
+  final FileService fileService;
 
   private String invoiceDbPath;
   private String idDbPath;
 
-  long currentId;
+  private long currentId;
 
   public FileDatabase(FileService fileService, String invoiceDbPath, String idDbPath) {
     this.invoiceDbPath = invoiceDbPath;
     this.idDbPath = idDbPath;
-    this.currentId = fileService.readLastIdFromDb(this.idDbPath );
+    this.currentId = fileService.readLastIdFromDb(this.idDbPath);
     this.fileService = fileService;
   }
 
@@ -64,7 +64,7 @@ public class FileDatabase implements Database {
           invoice.setSeller(updatedInvoice.getSeller());
         },
             () -> {
-            throw new IllegalArgumentException("Faktura o numerze: " + id + " nie istnieje");
+              throw new IllegalArgumentException("Faktura o numerze: " + id + " nie istnieje");
             });
 
     fileService.writeDataToFile(invoiceDbPath, invoicesList);
@@ -85,7 +85,7 @@ public class FileDatabase implements Database {
   }
 
   private long getNextId() {
-    fileService.writeDataToFile(idDbPath, currentId + 1);
-    return ++currentId;
+    fileService.writeDataToFile(idDbPath, ++currentId);
+    return currentId;
   }
 }

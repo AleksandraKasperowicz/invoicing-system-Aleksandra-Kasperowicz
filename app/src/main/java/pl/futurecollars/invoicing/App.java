@@ -20,12 +20,7 @@ import pl.futurecollars.invoicing.service.FileService;
 
 public class App {
 
-  public String getGreeting() {
-    return "Hello World!";
-  }
-
   public static void main(String[] args) {
-    System.out.println(new App().getGreeting());
     Database database = new FileDatabase(new FileService(), DB_PATH, ID_DB_PATH);
 
     Invoice invoice = Invoice.builder()
@@ -40,7 +35,7 @@ public class App {
     database.save(invoice);
     database.save(invoice);
 
-    Invoice invoice1 = database.getById(5).orElse(new Invoice());
+    Invoice invoice1 = database.getById(1).orElse(new Invoice());
 
     invoice1.setBuyer(new Company("1234", "88888888", "Gdańsk"));
     invoice1.setSeller(new Company("4321", "1", "Poznań"));
@@ -51,6 +46,5 @@ public class App {
     System.out.println(invoice1);
 
     database.delete(2);
-
   }
 }

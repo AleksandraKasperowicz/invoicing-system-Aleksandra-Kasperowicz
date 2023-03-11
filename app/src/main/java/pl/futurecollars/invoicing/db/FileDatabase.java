@@ -3,24 +3,22 @@ package pl.futurecollars.invoicing.db;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import pl.futurecollars.invoicing.model.Invoice;
 import pl.futurecollars.invoicing.service.FileService;
 
+@Primary
+@RequiredArgsConstructor
+
 public class FileDatabase implements Database {
 
-  final FileService fileService;
+  private final FileService fileService;
 
-  private String invoiceDbPath;
-  private String idDbPath;
+  private final String invoiceDbPath;
+  private final String idDbPath;
 
   private long currentId;
-
-  public FileDatabase(FileService fileService, String invoiceDbPath, String idDbPath) {
-    this.invoiceDbPath = invoiceDbPath;
-    this.idDbPath = idDbPath;
-    this.currentId = fileService.readLastIdFromDb(this.idDbPath);
-    this.fileService = fileService;
-  }
 
   @Override
   public long save(Invoice invoice) {

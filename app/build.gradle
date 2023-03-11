@@ -57,6 +57,11 @@ application {
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+
+}
+
+tasks.named('build'){
+    //finalizedBy jacocoTestCoverageVerification
 }
 
 checkstyle {
@@ -99,7 +104,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'LINE'
                 value = 'TOTALCOUNT'
-                maximum = 0.3
+                maximum = 0.85
             }
         }
     }

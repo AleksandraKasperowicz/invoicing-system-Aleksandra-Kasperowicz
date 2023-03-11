@@ -23,6 +23,13 @@ repositories {
 }
 
 dependencies {
+    // Use the latest Groovy version for Spock testing
+    testImplementation 'org.codehaus.groovy:groovy:3.0.9'
+
+    // Use the awesome Spock testing and specification framework even with Java
+    testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
+    testImplementation 'junit:junit:4.13.2'
+
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:31.1-jre'
 }
@@ -41,6 +48,12 @@ application {
     // Define the main class for the application.
     mainClass = 'pl.futurecollars.invoicing.App'
 }
+
+tasks.named('test') {
+    // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
+}
+
 checkstyle {
     showViolations = true
     ignoreFailures = false
@@ -95,5 +108,7 @@ jacocoTestCoverageVerification {
 
         testCompileOnly 'org.projectlombok:lombok:1.18.26'
         testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
+        implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
+        implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.1'
     }
 }

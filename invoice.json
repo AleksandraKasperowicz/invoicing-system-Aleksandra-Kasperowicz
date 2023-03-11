@@ -1,0 +1,181 @@
+[ {
+  "id" : 1,
+  "data" : "2023-03-03",
+  "buyer" : {
+    "id" : "id",
+    "taxIdentificationNumber" : "id",
+    "address" : "Poznań"
+  },
+  "seller" : {
+    "id" : "id",
+    "taxIdentificationNumber" : "id",
+    "address" : "Poznań"
+  },
+  "entries" : null
+}, {
+  "id" : 3,
+  "data" : "2023-03-03",
+  "buyer" : {
+    "id" : "id",
+    "taxIdentificationNumber" : "id",
+    "address" : "Poznań"
+  },
+  "seller" : {
+    "id" : "id",
+    "taxIdentificationNumber" : "id",
+    "address" : "Poznań"
+  },
+  "entries" : null
+}, {
+  "id" : 4,
+  "data" : "2023-03-04",
+  "buyer" : {
+    "id" : "id",
+    "taxIdentificationNumber" : "id",
+    "address" : "Poznań"
+  },
+  "seller" : {
+    "id" : "id",
+    "taxIdentificationNumber" : "id",
+    "address" : "Poznań"
+  },
+  "entries" : [ {
+    "description" : null,
+    "price" : 1.3,
+    "valueVat" : null,
+    "rateVat" : null
+  } ]
+}, {
+  "id" : 5,
+  "data" : "2023-03-04",
+  "buyer" : {
+    "id" : "1234",
+    "taxIdentificationNumber" : "88888888",
+    "address" : "Gdańsk"
+  },
+  "seller" : {
+    "id" : "4321",
+    "taxIdentificationNumber" : "1",
+    "address" : "Poznań"
+  },
+  "entries" : [ {
+    "description" : null,
+    "price" : 1.3,
+    "valueVat" : null,
+    "rateVat" : null
+  } ]
+}, {
+  "id" : 6,
+  "data" : "2023-03-04",
+  "buyer" : {
+    "id" : "1234",
+    "taxIdentificationNumber" : "88888888",
+    "address" : "Warszawa"
+  },
+  "seller" : {
+    "id" : "4321",
+    "taxIdentificationNumber" : "7777777",
+    "address" : "Poznań"
+  },
+  "entries" : [ {
+    "description" : null,
+    "price" : 40,
+    "valueVat" : null,
+    "rateVat" : null
+  } ]
+}, {
+  "id" : 7,
+  "data" : "2023-03-04",
+  "buyer" : {
+    "id" : "1234",
+    "taxIdentificationNumber" : "88888888",
+    "address" : "Warszawa"
+  },
+  "seller" : {
+    "id" : "4321",
+    "taxIdentificationNumber" : "7777777",
+    "address" : "Poznań"
+  },
+  "entries" : [ {
+    "description" : null,
+    "price" : 40,
+    "valueVat" : null,
+    "rateVat" : null
+  } ]
+}, {
+  "id" : 8,
+  "data" : "2023-03-04",
+  "buyer" : {
+    "id" : "1234",
+    "taxIdentificationNumber" : "88888888",
+    "address" : "Warszawa"
+  },
+  "seller" : {
+    "id" : "4321",
+    "taxIdentificationNumber" : "7777777",
+    "address" : "Poznań"
+  },
+  "entries" : [ {
+    "description" : null,
+    "price" : 40,
+    "valueVat" : null,
+    "rateVat" : null
+  } ]
+}, {
+  "id" : 9,
+  "data" : "2023-03-04",
+  "buyer" : {
+    "id" : "1234",
+    "taxIdentificationNumber" : "88888888",
+    "address" : "Warszawa"
+  },
+  "seller" : {
+    "id" : "4321",
+    "taxIdentificationNumber" : "7777777",
+    "address" : "Poznań"
+  },
+  "entries" : [ {
+    "description" : null,
+    "price" : 40,
+    "valueVat" : null,
+    "rateVat" : null
+  } ]
+}, {
+  "id" : 10,
+  "data" : "2023-03-04",
+  "buyer" : {
+    "id" : "1234",
+    "taxIdentificationNumber" : "88888888",
+    "address" : "Warszawa"
+  },
+  "seller" : {
+    "id" : "4321",
+    "taxIdentificationNumber" : "7777777",
+    "address" : "Poznań"
+  },
+  "entries" : [ {
+    "description" : "programing system",
+    "price" : 40,
+    "valueVat" : 3.2,
+    "rateVat" : "VAT8"
+  } ]
+}, {
+  "id" : 11,
+  "data" : "2023-03-04",
+  "buyer" : {
+    "id" : "1234",
+    "taxIdentificationNumber" : "88888888",
+    "address" : "Warszawa"
+  },
+  "seller" : {
+    "id" : "4321",
+    "taxIdentificationNumber" : "7777777",
+    "address" : "Poznań"
+  },
+  "entries" : [ {
+    "description" : "programing system",
+    "price" : 40,
+    "valueVat" : 3.2,
+    "rateVat" : "VAT8"
+  } ]
+} ]

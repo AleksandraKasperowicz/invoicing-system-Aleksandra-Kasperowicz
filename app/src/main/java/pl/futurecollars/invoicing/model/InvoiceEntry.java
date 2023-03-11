@@ -1,9 +1,15 @@
 package pl.futurecollars.invoicing.model;
 
 import java.math.BigDecimal;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 
 public class InvoiceEntry {
 
@@ -11,12 +17,5 @@ public class InvoiceEntry {
   private BigDecimal price;
   private BigDecimal valueVat;
   private Vat rateVat;
-
-  public InvoiceEntry(String description, BigDecimal price, BigDecimal valueVat, Vat rateVat) {
-    this.description = description;
-    this.price = price;
-    this.valueVat = valueVat;
-    this.rateVat = rateVat;
-  }
 
 }

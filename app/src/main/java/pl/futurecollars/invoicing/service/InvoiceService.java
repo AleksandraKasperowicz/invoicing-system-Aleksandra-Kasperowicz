@@ -14,7 +14,6 @@ public class InvoiceService {
 
   private final Database database;
 
-
   public long save(Invoice invoice) {
     return database.save(invoice);
   }

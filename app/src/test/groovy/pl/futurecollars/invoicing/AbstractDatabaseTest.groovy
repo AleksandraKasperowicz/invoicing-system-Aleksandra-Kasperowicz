@@ -32,7 +32,6 @@ abstract class AbstractDatabaseTest extends Specification {
     }
     def "should update invoice"() {
         given:
-        //int id = database.save(invoices.get(2)) as int
         def invoice = database.getById(3)
         when:
         invoice.get().setData(LocalDate.now())
@@ -41,7 +40,7 @@ abstract class AbstractDatabaseTest extends Specification {
         then:
         database.getById(3).get().getData() == LocalDate.now()
     }
-    def "get by id "(){
+    def "should get by id "(){
 
         when:
         def invoice = database.getById(2)

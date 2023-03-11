@@ -36,9 +36,12 @@ public class FileService {
   public <T> List<T> getDataFromFile(String fileName, Class<T> c) {
     try {
       JavaType type = objectMapper.getTypeFactory().constructParametricType(List.class, c);
-      return objectMapper.readValue(new File(fileName), type);
+      File file = new File(fileName);
+      if (file.length() != 0) {
+        return objectMapper.readValue(new File(fileName), type);
+      }
     } catch (IOException e) {
-      System.out.println("error reading data" + e);
+      System.out.println("problem reading data from file (" + fileName + "), will be treated as empty db, " + e);
     }
     return new ArrayList<>();
   }
@@ -47,7 +50,7 @@ public class FileService {
     try {
       String lastId = Files.readString(Path.of(dbPath));
       return Long.parseLong(lastId);
-    } catch (IOException e) {
+    } catch (Exception e) {
       return 0L;
     }
   }

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
-import pl.futurecollars.invoicing.Configuration;
 import pl.futurecollars.invoicing.model.Invoice;
 import pl.futurecollars.invoicing.service.FileService;
 
@@ -14,13 +13,12 @@ import pl.futurecollars.invoicing.service.FileService;
 
 public class FileDatabase implements Database {
 
-  FileService fileService;
-  long currentId;
+  private final FileService fileService;
 
-  public FileDatabase(FileService fileService) {
-    currentId = fileService.readLastIdFromDb(Configuration.ID_DB_PATH);
-    this.fileService = fileService;
-  }
+  private final String invoiceDbPath;
+  private final String idDbPath;
+
+  private long currentId;
 
   @Override
   public long save(Invoice invoice) {
@@ -30,7 +28,7 @@ public class FileDatabase implements Database {
     List<Invoice> invoices = getAll();
     invoices.add(invoice);
 
-    fileService.writeDataToFile(Configuration.DB_PATH, invoices);
+    fileService.writeDataToFile(invoiceDbPath, invoices);
 
     return invoice.getId();
 
@@ -46,7 +44,7 @@ public class FileDatabase implements Database {
 
   @Override
   public List<Invoice> getAll() {
-    return fileService.getDataFromFile(Configuration.DB_PATH, Invoice.class);
+    return fileService.getDataFromFile(invoiceDbPath, Invoice.class);
 
   }
 
@@ -64,10 +62,10 @@ public class FileDatabase implements Database {
           invoice.setSeller(updatedInvoice.getSeller());
         },
             () -> {
-            throw new IllegalArgumentException("Faktura o numerze: " + id + " nie istnieje");
+              throw new IllegalArgumentException("Faktura o numerze: " + id + " nie istnieje");
             });
 
-    fileService.writeDataToFile(Configuration.DB_PATH, invoicesList);
+    fileService.writeDataToFile(invoiceDbPath, invoicesList);
   }
 
   @Override
@@ -79,13 +77,13 @@ public class FileDatabase implements Database {
       if (invoice.getId().equals(id)) {
         invoiceIterator.remove();
       }
-      fileService.writeDataToFile(Configuration.DB_PATH, invoiceList);
+      fileService.writeDataToFile(invoiceDbPath, invoiceList);
     }
 
   }
 
   private long getNextId() {
-    fileService.writeDataToFile("id.txt", currentId + 1);
-    return ++currentId;
+    fileService.writeDataToFile(idDbPath, ++currentId);
+    return currentId;
   }
 }

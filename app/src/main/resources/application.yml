@@ -6,3 +6,10 @@ invoicing-system:
       type: file
       dbPath: invoice.json
       idDbPath: id.txt
+
+logging:
+  level:
+    pl:
+      futurecollars:
+        invoicing: INFO
+        invoicing.db: DEBUG

@@ -11,8 +11,10 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FileService {
@@ -26,6 +28,7 @@ public class FileService {
   }
 
   public void writeDataToFile(String fileName, Object object) {
+    log.debug("write data to file = {}", fileName);
     try {
       objectMapper.writeValue(new File(fileName), object);
     } catch (IOException e) {
@@ -34,6 +37,7 @@ public class FileService {
   }
 
   public <T> List<T> getDataFromFile(String fileName, Class<T> c) {
+    log.debug("get data from file = {}", fileName);
     try {
       JavaType type = objectMapper.getTypeFactory().constructParametricType(List.class, c);
       File file = new File(fileName);
@@ -41,12 +45,13 @@ public class FileService {
         return objectMapper.readValue(new File(fileName), type);
       }
     } catch (IOException e) {
-      System.out.println("problem reading data from file (" + fileName + "), will be treated as empty db, " + e);
+      log.debug("problem reading data from file (" + fileName + "), will be treated as empty db, " + e);
     }
     return new ArrayList<>();
   }
 
   public long readLastIdFromDb(String dbPath) {
+    log.debug("read id from file = {}", dbPath);
     try {
       String lastId = Files.readString(Path.of(dbPath));
       return Long.parseLong(lastId);

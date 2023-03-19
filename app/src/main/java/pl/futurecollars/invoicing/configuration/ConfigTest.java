@@ -5,8 +5,8 @@ import java.io.IOException;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
-@Primary
 @Configuration
+@Primary
 
 public class ConfigTest implements Config {
 

@@ -1,0 +1,7 @@
+server:
+  port: 7777
+
+invoicing-system:
+  database:
+    type: inmemory
+    dbPath:

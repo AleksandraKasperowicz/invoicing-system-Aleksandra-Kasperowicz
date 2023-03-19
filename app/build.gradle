@@ -48,12 +48,6 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
-}
-
 application {
     // Define the main class for the application.
     mainClass = 'pl.futurecollars.invoicing.App'

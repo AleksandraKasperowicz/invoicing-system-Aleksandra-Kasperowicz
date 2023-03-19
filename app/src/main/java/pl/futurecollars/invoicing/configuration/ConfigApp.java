@@ -2,6 +2,7 @@ package pl.futurecollars.invoicing.configuration;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 @Data
@@ -10,16 +11,19 @@ import org.springframework.context.annotation.Configuration;
 
 public class ConfigApp implements Config {
 
-  public static final String DB_PATH = "invoice.json";
-  public static final String ID_DB_PATH = "id.txt";
+  @Value("${invoicing-system.database.dbPath}")
+  private String dbPath;
+
+  @Value("${invoicing-system.database.idDbPath}")
+  private String idDbPath = "id.txt";
 
   @Override
   public String getIdPath() {
-    return ID_DB_PATH;
+    return idDbPath;
   }
 
   @Override
   public String getInvoicePath() {
-    return DB_PATH;
+    return dbPath;
   }
 }

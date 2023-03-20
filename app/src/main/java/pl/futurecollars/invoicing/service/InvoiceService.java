@@ -11,7 +11,6 @@ import pl.futurecollars.invoicing.model.Invoice;
 @Service
 @RequiredArgsConstructor
 public class InvoiceService {
-
   private final Database database;
 
   public long save(Invoice invoice) {

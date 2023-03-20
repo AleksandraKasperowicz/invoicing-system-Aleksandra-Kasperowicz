@@ -6,6 +6,8 @@ buildscript {
         springDependencyManagmentVersion = '1.1.0'
         groovyVersion = '3.0.9'
         fasterxmlVersion = '2.11.1'
+        springfoxVersion = '3.0.0'
+        springFoxUiVersion = '3.0.0'
     }
 }
 plugins {
@@ -43,9 +45,12 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-databind:${fasterxmlVersion}"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${fasterxmlVersion}"
 
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation "org.springframework.boot:spring-boot-starter-web"
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+
+    implementation "io.springfox:springfox-boot-starter:${springfoxVersion}"
+    implementation "io.springfox:springfox-swagger-ui:${springfoxVersion}"
 }
 
 application {

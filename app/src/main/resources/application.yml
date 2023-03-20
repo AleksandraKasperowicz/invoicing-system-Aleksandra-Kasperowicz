@@ -1,5 +1,5 @@
 server:
-  port: 8888
+  port: 3333
 
 invoicing-system:
     database:
@@ -13,3 +13,8 @@ logging:
       futurecollars:
         invoicing: INFO
         invoicing.db: DEBUG
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

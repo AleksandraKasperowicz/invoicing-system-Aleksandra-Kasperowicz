@@ -1,7 +1,7 @@
 package pl.futurecollars.invoicing.db
 
 import pl.futurecollars.invoicing.AbstractDatabaseTest
-import pl.futurecollars.invoicing.configuration.ConfigTest
+import pl.futurecollars.invoicing.configuration.AppConfiguration
 import pl.futurecollars.invoicing.model.Invoice
 import pl.futurecollars.invoicing.service.FileService
 import static pl.futurecollars.invoicing.TestInvoice.invoice
@@ -17,11 +17,9 @@ class FileDatabaseTest extends AbstractDatabaseTest {
 
     @Override
     Database initDatabase() {
-        def fileService = new FileService()
-        return new FileDatabase(fileService, new ConfigTest())
+        def tmpFilePath = File.createTempFile('test', '.txt').getAbsolutePath()
+        def tmpIdPath = File.createTempFile("tmpTxt", '.txt').getAbsolutePath()
+        def appConfig = new AppConfiguration(tmpFilePath, tmpIdPath)
+        return new FileDatabase(new FileService(appConfig.objectMapper()), appConfig)
     }
-//        def invoicePath = File.createTempFile("tmpInvoices", '.json')
-//        def idPath = File.createTempFile("tmpTxt", '.txt')
-//        def fileService = new FileService()
-//        return new FileDatabase(fileService, invoicePath.getPath(), idPath.getPath())
 }

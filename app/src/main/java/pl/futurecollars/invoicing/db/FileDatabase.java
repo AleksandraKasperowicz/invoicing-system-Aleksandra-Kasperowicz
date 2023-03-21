@@ -4,21 +4,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import pl.futurecollars.invoicing.configuration.Config;
+import pl.futurecollars.invoicing.configuration.AppConfiguration;
 import pl.futurecollars.invoicing.model.Invoice;
 import pl.futurecollars.invoicing.service.FileService;
 
 @Repository
 @RequiredArgsConstructor
-
 public class FileDatabase implements Database {
 
   private final FileService fileService;
-
-  @Autowired
-  private final Config config;
+  private final AppConfiguration config;
   private long currentId;
 
   @Override

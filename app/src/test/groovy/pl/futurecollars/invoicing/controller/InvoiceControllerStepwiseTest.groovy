@@ -12,7 +12,6 @@ import pl.futurecollars.invoicing.model.Invoice
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Stepwise
-
 import java.time.LocalDate
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
@@ -47,7 +46,7 @@ class InvoiceControllerStepwiseTest extends Specification {
                 .response
                 .contentAsString
         then:
-        response == "[]"
+        response == "[ ]"
     }
 
 

@@ -5,10 +5,9 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
-import pl.futurecollars.invoicing.configuration.Config;
+import pl.futurecollars.invoicing.configuration.AppConfiguration;
 import pl.futurecollars.invoicing.model.Invoice;
 import pl.futurecollars.invoicing.service.FileService;
 
@@ -16,20 +15,17 @@ import pl.futurecollars.invoicing.service.FileService;
 @ConditionalOnProperty(value = "invoicing-system.database.type", havingValue = "file")
 @Repository
 @RequiredArgsConstructor
-
 public class FileDatabase implements Database {
 
   private final FileService fileService;
-
-  @Autowired
-  private final Config config;
-
+  private final AppConfiguration config;
   private long currentId;
 
   @Override
   public long save(Invoice invoice) {
 
     invoice.setId(getNextId());
+
     List<Invoice> invoices = getAll();
     invoices.add(invoice);
 

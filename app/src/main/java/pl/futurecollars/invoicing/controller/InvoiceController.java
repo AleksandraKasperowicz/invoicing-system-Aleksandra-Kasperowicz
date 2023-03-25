@@ -21,7 +21,7 @@ public class InvoiceController {
 
   final InvoiceService invoiceService;
 
-  @GetMapping("/getAll")
+  @GetMapping(value = "/getAll", produces = {"application/json;charset=UTF-8"})
   public List<Invoice> getAll() {
     return invoiceService.getAll();
   }
@@ -31,7 +31,7 @@ public class InvoiceController {
     return invoiceService.save(invoice);
   }
 
-  @GetMapping("/getById/{id}")
+  @GetMapping(value = "/getById/{id}", produces = {"application/json;charset=UTF-8"})
   public ResponseEntity<Invoice> getById(@PathVariable long id) {
     return invoiceService.getById(id)
         .map(invoice -> ResponseEntity.ok().body(invoice))

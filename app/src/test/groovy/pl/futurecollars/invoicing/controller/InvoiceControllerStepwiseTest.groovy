@@ -119,8 +119,8 @@ class InvoiceControllerStepwiseTest extends Specification {
         mockMvc.perform(put("/invoices/update/" + invoiceId)
                 .content(invoiceAsJson)
                 .contentType(MediaType.APPLICATION_JSON))
-        .andDo(print())
-        .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(status().isOk())
     }
 
 
@@ -142,9 +142,18 @@ class InvoiceControllerStepwiseTest extends Specification {
         then:
         invoices == expectedInvoice
     }
+
     def "invoice can be deleted"() {
         expect:
         mockMvc.perform(delete("/invoices/" + invoiceId))
                 .andExpect(status().isOk())
+
+        and:
+        mockMvc.perform(delete("/invoices/" + invoiceId))
+                .andExpect(status().isNotFound())
+
+        and:
+        mockMvc.perform(get("/invoices/getById/" + invoiceId))
+                .andExpect(status().isNotFound())
     }
 }

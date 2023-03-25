@@ -7,7 +7,7 @@ import pl.futurecollars.invoicing.service.TaxCalculatorService;
 
 @RestController
 @AllArgsConstructor
-public class TaxCalculatorController implements TaxCalculatorApi{
+public class TaxCalculatorController implements TaxCalculatorApi {
 
   private final TaxCalculatorService calculatorService;
 

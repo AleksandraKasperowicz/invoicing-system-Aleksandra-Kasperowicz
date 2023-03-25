@@ -73,7 +73,7 @@ public class FileDatabase implements Database {
         .filter(invoice -> invoice.getId().equals(id))
         .findFirst()
         .ifPresentOrElse(invoice -> {
-          invoice.setData(updatedInvoice.getData());
+          invoice.setDate(updatedInvoice.getDate());
           invoice.setBuyer(updatedInvoice.getBuyer());
           invoice.setSeller(updatedInvoice.getSeller());
         },

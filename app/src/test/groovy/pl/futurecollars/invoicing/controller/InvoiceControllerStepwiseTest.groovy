@@ -112,7 +112,7 @@ class InvoiceControllerStepwiseTest extends Specification {
         given:
         def modificationInvoice = originalInvoice
         modificationInvoice.id = invoiceId
-        modificationInvoice.data = updateDate
+        modificationInvoice.date = updateDate
 
         def invoiceAsJson = objectMapper.writeValueAsString(modificationInvoice)
 
@@ -129,7 +129,7 @@ class InvoiceControllerStepwiseTest extends Specification {
         given:
         def expectedInvoice = originalInvoice
         expectedInvoice.id = invoiceId
-        expectedInvoice.data = updateDate
+        expectedInvoice.date = updateDate
 
         when:
         def response = mockMvc.perform(get("/invoices/getById/" + invoiceId))

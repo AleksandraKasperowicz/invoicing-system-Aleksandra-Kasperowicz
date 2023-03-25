@@ -87,5 +87,4 @@ class TaxCalculatorControllerTest extends AbstractControllerTest {
         taxCalculatorResponse.outgoingVat == 240.0
         taxCalculatorResponse.vatToReturn == 6000.0
     }
-
 }

@@ -14,15 +14,13 @@ class InvoiceControllerTest extends AbstractControllerTest {
     }
 
     def "should add five invoices"() {
-        given:
-        def invoiceAsJson = invoiceAsJson(1)
 
         expect:
-        def firstId = addInvoiceAndReturnId(invoiceAsJson)
-        addInvoiceAndReturnId(invoiceAsJson) == firstId + 1
-        addInvoiceAndReturnId(invoiceAsJson) == firstId + 2
-        addInvoiceAndReturnId(invoiceAsJson) == firstId + 3
-        addInvoiceAndReturnId(invoiceAsJson) == firstId + 4
+        def firstId = addInvoiceAndReturnId(invoice(1))
+        addInvoiceAndReturnId(invoice(2)) == firstId + 1
+        addInvoiceAndReturnId(invoice(3)) == firstId + 2
+        addInvoiceAndReturnId(invoice(4)) == firstId + 3
+        addInvoiceAndReturnId(invoice(5)) == firstId + 4
     }
 
     def "all invoices are returned when getting all invoices"() {
@@ -75,7 +73,7 @@ class InvoiceControllerTest extends AbstractControllerTest {
 
     def "invoice data can be modified"() {
         given:
-        def id = addInvoiceAndReturnId(invoiceAsJson(111))
+        def id = addInvoiceAndReturnId(invoice(111))
         def updatedInvoice = invoice(111)
         updatedInvoice.id = id
 

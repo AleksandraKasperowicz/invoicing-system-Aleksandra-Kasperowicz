@@ -7,8 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
+import pl.futurecollars.invoicing.model.Company
 import pl.futurecollars.invoicing.model.Invoice
-import pl.futurecollars.invoicing.service.CalculateResult
+import pl.futurecollars.invoicing.service.CalculatorResult
 import spock.lang.Specification
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
@@ -32,8 +33,8 @@ class AbstractControllerTest extends Specification {
         getAllInvoices().each { invoice -> deleteInvoice(invoice.id as int) }
     }
 
-    int addInvoiceAndReturnId(String invoiceAsJson) {
-        mockMvc.perform(post("$INVOICE_ENDPOINT/add").content(invoiceAsJson).contentType(MediaType.APPLICATION_JSON))
+    int addInvoiceAndReturnId(Invoice invoice) {
+        mockMvc.perform(post("$INVOICE_ENDPOINT/add").content(objectMapper.writeValueAsString(invoice)).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn()
                 .response
@@ -57,7 +58,7 @@ class AbstractControllerTest extends Specification {
     List<Invoice> addMultipleInvoices(int numberOfInvoices) {
         (1..numberOfInvoices).collect { id ->
             def invoice = invoice(id)
-            invoice.id = addInvoiceAndReturnId(objectMapper.writeValueAsString(invoice))
+            invoice.id = addInvoiceAndReturnId(invoice)
             return invoice
         }
     }
@@ -76,14 +77,14 @@ class AbstractControllerTest extends Specification {
                 .andExpect(status().isOk())
     }
 
-    CalculateResult calculateTax(String taxIdentificationNumber) {
-        def response = mockMvc.perform(get("$TAX_CALCULATOR_ENDPOINT/$taxIdentificationNumber"))
+    CalculatorResult calculateTax(Company company) {
+        def response = mockMvc.perform(post("$TAX_CALCULATOR_ENDPOINT").content(objectMapper.writeValueAsString(company)).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn()
                 .response
                 .contentAsString
 
-        objectMapper.readValue(response, CalculateResult)
+        objectMapper.readValue(response, CalculatorResult)
     }
 }
 

@@ -48,24 +48,20 @@ public class FileDatabase implements Database {
   @Override
   public Optional<Invoice> update(long id, Invoice updatedInvoice) {
     List<Invoice> invoicesList = getAll();
-    try {
-      invoicesList
-          .stream()
-          .filter(invoice -> invoice.getId().equals(id))
-          .findFirst()
-          .ifPresentOrElse(invoice -> {
-            invoice.setData(updatedInvoice.getData());
-            invoice.setBuyer(updatedInvoice.getBuyer());
-            invoice.setSeller(updatedInvoice.getSeller());
-          },
-              () -> {
-                throw new IllegalArgumentException("Faktura o numerze: " + id + " nie istnieje");
-              });
-    } catch (IllegalArgumentException illegalArgumentException) {
-      return Optional.empty();
+
+    Optional<Invoice> invoiceToBeUpdated = invoicesList
+        .stream()
+        .filter(invoice -> invoice.getId().equals(id))
+        .findFirst();
+
+    if (invoiceToBeUpdated.isPresent()) {
+      invoiceToBeUpdated.get().setData(updatedInvoice.getData());
+      invoiceToBeUpdated.get().setBuyer(updatedInvoice.getBuyer());
+      invoiceToBeUpdated.get().setSeller(updatedInvoice.getSeller());
+      fileService.writeDataToFile(config.getInvoicePath(), invoicesList);
     }
-    fileService.writeDataToFile(config.getInvoicePath(), invoicesList);
-    return getById(updatedInvoice.getId());
+
+    return invoiceToBeUpdated;
   }
 
   @Override

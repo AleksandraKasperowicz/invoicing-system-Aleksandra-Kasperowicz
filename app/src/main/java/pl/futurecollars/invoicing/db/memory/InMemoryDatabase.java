@@ -48,15 +48,8 @@ public class InMemoryDatabase implements Database {
 
   @Override
   public Optional<Invoice> update(long id, Invoice updatedInvoice) {
-  public void update(long id, Invoice updatedInvoice) {
     log.debug("update invoice id = {}", id);
     log.info("update invoice id = {}", id);
-
-    if (!invoices.containsKey(id)) {
-      log.debug("invoice id = {} doesn't exist", id);
-      throw new IllegalArgumentException("Faktura o numerze: " + id + " nie istnieje");
-    }
-
     updatedInvoice.setId(id);
 
     return Optional.ofNullable(invoices.put(id, updatedInvoice));
@@ -64,12 +57,10 @@ public class InMemoryDatabase implements Database {
 
   @Override
   public Optional<Invoice> delete(long id) {
-    return Optional.ofNullable(invoices.remove(id));
-  public void delete(long id) {
     log.debug("delete invoice id = {}", id);
     log.info("delete invoice id = {}", id);
-    invoices.remove(id);
     log.debug("invoice id = {} deleted", id);
+    return Optional.ofNullable(invoices.remove(id));
 
   }
 

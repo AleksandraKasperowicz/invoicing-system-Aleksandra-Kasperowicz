@@ -60,26 +60,13 @@ public class FileDatabase implements Database {
 
   @Override
   public Optional<Invoice> update(long id, Invoice updatedInvoice) {
-  public void update(long id, Invoice updatedInvoice) {
     log.debug("update invoice id = {}", id);
     log.info("update invoice id = {}", id);
-
     List<Invoice> invoicesList = getAll();
-
     Optional<Invoice> invoiceToBeUpdated = invoicesList
         .stream()
         .filter(invoice -> invoice.getId().equals(id))
         .findFirst();
-        .findFirst()
-        .ifPresentOrElse(invoice -> {
-          invoice.setData(updatedInvoice.getData());
-          invoice.setBuyer(updatedInvoice.getBuyer());
-          invoice.setSeller(updatedInvoice.getSeller());
-        },
-            () -> {
-              log.debug("invoice id = {} doesn't exist", id);
-              throw new IllegalArgumentException("Faktura o numerze: " + id + " nie istnieje");
-            });
 
     if (invoiceToBeUpdated.isPresent()) {
       invoiceToBeUpdated.get().setData(updatedInvoice.getData());
@@ -92,10 +79,10 @@ public class FileDatabase implements Database {
   }
 
   @Override
-  public void delete(long id) {
+
+  public Optional<Invoice> delete(long id) {
     log.debug("delete invoice id = {}", id);
     log.info("delete invoice id = {}", id);
-  public Optional<Invoice> delete(long id) {
     Invoice deleteInvoice = null;
     List<Invoice> invoiceList = getAll();
     Iterator<Invoice> invoiceIterator = invoiceList.iterator();

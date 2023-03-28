@@ -9,6 +9,7 @@ invoicing-system:
 
 logging:
   level:
+    org:
     pl:
       futurecollars:
         invoicing: INFO
@@ -18,3 +19,7 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  profiles:
+      active: memory
+  flyway:
+      enabled: true

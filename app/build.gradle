@@ -1,5 +1,6 @@
 buildscript {
     ext {
+        flywayVersion = '9.8.1'
         lombokVersion = '1.18.24'
         spockVersion = '2.0-groovy-3.0'
         springBootVersion = '2.7.8'
@@ -13,14 +14,15 @@ buildscript {
 plugins {
     // Apply the groovy plugin to also add support for Groovy (needed for Spock)
     id 'groovy'
-
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
     id 'checkstyle'
     id 'jacoco'
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${springDependencyManagmentVersion}"
+    id "org.flywaydb.flyway" version "9.8.1"
 }
+
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -28,6 +30,9 @@ repositories {
 }
 
 dependencies {
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    compile "org.flywaydb:flyway-core:${flywayVersion}"
     // Use the latest Groovy version for Spock testing
     testImplementation "org.codehaus.groovy:groovy:${groovyVersion}"
 
@@ -35,22 +40,27 @@ dependencies {
     testImplementation "org.spockframework:spock-core:${spockVersion}"
     testImplementation "org.spockframework:spock-spring:${spockVersion}"
     testImplementation "junit:junit:4.13.2"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
 
     // This dependency is used by the application.
     compileOnly "org.projectlombok:lombok:${lombokVersion}"
-    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
     testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
     implementation "com.fasterxml.jackson.core:jackson-databind:${fasterxmlVersion}"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${fasterxmlVersion}"
 
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation "org.springframework.boot:spring-boot-starter-web"
-
-    testImplementation "org.springframework.boot:spring-boot-starter-test"
 
     implementation "io.springfox:springfox-boot-starter:${springfoxVersion}"
     implementation "io.springfox:springfox-swagger-ui:${springfoxVersion}"
+
+    implementation "org.flywaydb:flyway-core:${flywayVersion}"
+
+    runtimeOnly "com.h2database:h2:1.4.200"
+    runtimeOnly "org.postgresql:postgresql:42.2.19"
 }
 
 application {
@@ -99,3 +109,17 @@ jacocoTestCoverageVerification {
         }
     }
 }
+task testWithFileDatabase(type: Test) {
+    systemProperty 'spring.profiles.active', 'file'
+}
+
+task testWithMemoryDatabase(type: Test) {
+    systemProperty 'spring.profiles.active', 'memory'
+}
+
+task testWithSqlDatabase(type: Test) {
+    systemProperty 'spring.profiles.active', 'sql'
+}
+check.dependsOn testWithFileDatabase
+check.dependsOn testWithMemoryDatabase
+

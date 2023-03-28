@@ -47,6 +47,7 @@ public class InMemoryDatabase implements Database {
   }
 
   @Override
+  public Optional<Invoice> update(long id, Invoice updatedInvoice) {
   public void update(long id, Invoice updatedInvoice) {
     log.debug("update invoice id = {}", id);
     log.info("update invoice id = {}", id);
@@ -57,10 +58,13 @@ public class InMemoryDatabase implements Database {
     }
 
     updatedInvoice.setId(id);
-    invoices.put(id, updatedInvoice);
+
+    return Optional.ofNullable(invoices.put(id, updatedInvoice));
   }
 
   @Override
+  public Optional<Invoice> delete(long id) {
+    return Optional.ofNullable(invoices.remove(id));
   public void delete(long id) {
     log.debug("delete invoice id = {}", id);
     log.info("delete invoice id = {}", id);

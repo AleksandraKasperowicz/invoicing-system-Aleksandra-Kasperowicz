@@ -79,7 +79,8 @@ jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                minimum = 0.8
+                counter = 'BRANCH'
+                minimum = 0.80
             }
         }
 
@@ -90,8 +91,7 @@ jacocoTestCoverageVerification {
 
             limit {
                 counter = 'LINE'
-                value = 'TOTALCOUNT'
-                maximum = 0.8
+                minimum = 0.80
             }
         }
     }

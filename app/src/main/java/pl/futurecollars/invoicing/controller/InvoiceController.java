@@ -21,7 +21,7 @@ public class InvoiceController {
 
   final InvoiceService invoiceService;
 
-  @GetMapping("/getAll")
+  @GetMapping(value = "/getAll", produces = {"application/json;charset=UTF-8"})
   public List<Invoice> getAll() {
     return invoiceService.getAll();
   }
@@ -31,7 +31,7 @@ public class InvoiceController {
     return invoiceService.save(invoice);
   }
 
-  @GetMapping("/getById/{id}")
+  @GetMapping(value = "/getById/{id}", produces = {"application/json;charset=UTF-8"})
   public ResponseEntity<Invoice> getById(@PathVariable long id) {
     return invoiceService.getById(id)
         .map(invoice -> ResponseEntity.ok().body(invoice))
@@ -40,19 +40,14 @@ public class InvoiceController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<?> deleteById(@PathVariable long id) {
-    if (invoiceService.getById(id).isEmpty()) {
-      return ResponseEntity.notFound().build();
-    }
-    invoiceService.delete(id);
-    return ResponseEntity.ok("ok");
+    return invoiceService.delete(id)
+    .map(name -> ResponseEntity.noContent().build()).orElse(ResponseEntity.notFound().build());
   }
 
   @PutMapping("/update/{id}")
   public ResponseEntity<?> update(@PathVariable long id, @RequestBody Invoice invoice) {
-    if (invoiceService.getById(id).isEmpty()) {
-      return ResponseEntity.notFound().build();
-    }
-    invoiceService.update(id, invoice);
-    return ResponseEntity.ok("ok");
+    return invoiceService.update(id, invoice)
+        .map(name -> ResponseEntity.noContent().build())
+        .orElse(ResponseEntity.notFound().build());
   }
 }

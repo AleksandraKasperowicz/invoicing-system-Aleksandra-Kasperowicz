@@ -36,19 +36,16 @@ public class InMemoryDatabase implements Database {
   }
 
   @Override
-  public void update(long id, Invoice updatedInvoice) {
-
-    if (!invoices.containsKey(id)) {
-      throw new IllegalArgumentException("Faktura o numerze: " + id + " nie istnieje");
-    }
+  public Optional<Invoice> update(long id, Invoice updatedInvoice) {
 
     updatedInvoice.setId(id);
-    invoices.put(id, updatedInvoice);
+
+    return Optional.ofNullable(invoices.put(id, updatedInvoice));
   }
 
   @Override
-  public void delete(long id) {
-    invoices.remove(id);
+  public Optional<Invoice> delete(long id) {
+    return Optional.ofNullable(invoices.remove(id));
   }
 
   private long getNextId() {

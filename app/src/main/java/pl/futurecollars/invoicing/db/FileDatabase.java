@@ -46,37 +46,38 @@ public class FileDatabase implements Database {
   }
 
   @Override
-  public void update(long id, Invoice updatedInvoice) {
-
+  public Optional<Invoice> update(long id, Invoice updatedInvoice) {
     List<Invoice> invoicesList = getAll();
-    invoicesList
+
+    Optional<Invoice> invoiceToBeUpdated = invoicesList
         .stream()
         .filter(invoice -> invoice.getId().equals(id))
-        .findFirst()
-        .ifPresentOrElse(invoice -> {
-          invoice.setData(updatedInvoice.getData());
-          invoice.setBuyer(updatedInvoice.getBuyer());
-          invoice.setSeller(updatedInvoice.getSeller());
-        },
-            () -> {
-              throw new IllegalArgumentException("Faktura o numerze: " + id + " nie istnieje");
-            });
+        .findFirst();
 
-    fileService.writeDataToFile(config.getInvoicePath(), invoicesList);
+    if (invoiceToBeUpdated.isPresent()) {
+      invoiceToBeUpdated.get().setData(updatedInvoice.getData());
+      invoiceToBeUpdated.get().setBuyer(updatedInvoice.getBuyer());
+      invoiceToBeUpdated.get().setSeller(updatedInvoice.getSeller());
+      fileService.writeDataToFile(config.getInvoicePath(), invoicesList);
+    }
+
+    return invoiceToBeUpdated;
   }
 
   @Override
-  public void delete(long id) {
+  public Optional<Invoice> delete(long id) {
+    Invoice deleteInvoice = null;
     List<Invoice> invoiceList = getAll();
     Iterator<Invoice> invoiceIterator = invoiceList.iterator();
     while (invoiceIterator.hasNext()) {
       Invoice invoice = invoiceIterator.next();
       if (invoice.getId().equals(id)) {
+        deleteInvoice = invoice;
         invoiceIterator.remove();
       }
       fileService.writeDataToFile(config.getInvoicePath(), invoiceList);
     }
-
+    return Optional.ofNullable(deleteInvoice);
   }
 
   private long getNextId() {

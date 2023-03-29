@@ -32,6 +32,7 @@ dependencies {
 
     // Use the awesome Spock testing and specification framework even with Java
     testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
+    testImplementation 'org.spockframework:spock-spring:2.0-groovy-3.0'
     testImplementation 'junit:junit:4.13.2'
 
     // This dependency is used by the application.
@@ -56,11 +57,6 @@ application {
     mainClass = 'pl.futurecollars.invoicing.App'
 }
 
-tasks.named('test') {
-    // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
-}
-
 checkstyle {
     showViolations = true
     ignoreFailures = false
@@ -75,9 +71,18 @@ jacocoTestReport {
     dependsOn test // tests are required to run before generating the report
 }
 jacoco {
-    toolVersion = "0.8.8"
-    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+    applyTo run
 }
+
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+tasks.named('build'){
+    finalizedBy jacocoTestCoverageVerification
+}
+
 jacocoTestReport {
     reports {
         xml.required = false
@@ -85,11 +90,13 @@ jacocoTestReport {
         html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
 }
+
 jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                minimum = 0.8
+                counter = 'BRANCH'
+                minimum = 0.80
             }
         }
 
@@ -100,8 +107,7 @@ jacocoTestCoverageVerification {
 
             limit {
                 counter = 'LINE'
-                value = 'TOTALCOUNT'
-                maximum = 0.3
+                minimum = 0.80
             }
         }
     }

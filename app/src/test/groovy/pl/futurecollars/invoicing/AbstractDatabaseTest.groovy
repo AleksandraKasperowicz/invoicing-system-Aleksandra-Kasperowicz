@@ -62,11 +62,10 @@ abstract class AbstractDatabaseTest extends Specification {
 
     def "should return exceptions"() {
         when:
-        database.update(555, invoices.get(1))
+        Optional<Invoice> invoice = database.update(555, invoices.get(1))
 
         then:
-        def exception = thrown(IllegalArgumentException)
-        exception.message == "Faktura o numerze: 555 nie istnieje"
+        invoice.isEmpty()
     }
     def "should delete invoice"() {
 

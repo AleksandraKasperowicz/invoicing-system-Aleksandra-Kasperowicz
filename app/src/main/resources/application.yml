@@ -22,4 +22,4 @@ spring:
   profiles:
       active: memory
   flyway:
-      enabled: true
+      enabled: false

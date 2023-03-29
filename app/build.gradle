@@ -32,7 +32,7 @@ repositories {
 dependencies {
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
-    compile "org.flywaydb:flyway-core:${flywayVersion}"
+    implementation "org.flywaydb:flyway-core:${flywayVersion}"
     // Use the latest Groovy version for Spock testing
     testImplementation "org.codehaus.groovy:groovy:${groovyVersion}"
 

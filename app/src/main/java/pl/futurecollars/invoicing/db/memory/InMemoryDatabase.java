@@ -22,7 +22,6 @@ public class InMemoryDatabase implements Database {
   @Override
   public long save(Invoice invoice) {
     invoice.setId(getNextId());
-    log.debug("save invoice id = {}", invoice.getId());
     log.info("save invoice id = {}", invoice.getId());
     invoices.put(invoice.getId(), invoice);
     log.debug("after DB update invoices.size = {}", invoices.size());
@@ -33,13 +32,11 @@ public class InMemoryDatabase implements Database {
   @Override
   public Optional<Invoice> getById(long id) {
     log.debug("getById(id = {})", id);
-    log.info("getById(id = {})", id);
     return Optional.ofNullable(invoices.get(id));
   }
 
   @Override
   public List<Invoice> getAll() {
-    log.debug("getAll");
     log.info("getAll");
     List<Invoice> allInvoices = new ArrayList<>(invoices.values());
     log.debug("allInvoices.size = {}", allInvoices.size());
@@ -48,7 +45,6 @@ public class InMemoryDatabase implements Database {
 
   @Override
   public Optional<Invoice> update(long id, Invoice updatedInvoice) {
-    log.debug("update invoice id = {}", id);
     log.info("update invoice id = {}", id);
     updatedInvoice.setId(id);
 
@@ -57,7 +53,6 @@ public class InMemoryDatabase implements Database {
 
   @Override
   public Optional<Invoice> delete(long id) {
-    log.debug("delete invoice id = {}", id);
     log.info("delete invoice id = {}", id);
     log.debug("invoice id = {} deleted", id);
     return Optional.ofNullable(invoices.remove(id));

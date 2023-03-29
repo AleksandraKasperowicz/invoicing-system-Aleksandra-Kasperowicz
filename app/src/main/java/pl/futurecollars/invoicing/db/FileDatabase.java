@@ -29,7 +29,6 @@ public class FileDatabase implements Database {
     List<Invoice> invoices = getAll();
     invoices.add(invoice);
 
-    log.debug("save invoice id = {}", invoice.getId());
     log.info("save invoice id = {}", invoice.getId());
     fileService.writeDataToFile(config.getInvoicePath(), invoices);
     log.debug("after DB update invoices.size = {}", invoices.size());
@@ -40,7 +39,6 @@ public class FileDatabase implements Database {
 
   @Override
   public Optional<Invoice> getById(long id) {
-    log.debug("getById(id = {})", id);
     log.info("getById(id = {})", id);
     return getAll()
         .stream()
@@ -50,7 +48,6 @@ public class FileDatabase implements Database {
 
   @Override
   public List<Invoice> getAll() {
-    log.debug("getAll");
     log.info("getAll");
     List<Invoice> allInvoices = fileService.getDataFromFile(config.getInvoicePath(), Invoice.class);
     log.debug("allInvoices.size = {}", allInvoices.size());
@@ -60,7 +57,6 @@ public class FileDatabase implements Database {
 
   @Override
   public Optional<Invoice> update(long id, Invoice updatedInvoice) {
-    log.debug("update invoice id = {}", id);
     log.info("update invoice id = {}", id);
     List<Invoice> invoicesList = getAll();
     Optional<Invoice> invoiceToBeUpdated = invoicesList
@@ -81,7 +77,6 @@ public class FileDatabase implements Database {
   @Override
 
   public Optional<Invoice> delete(long id) {
-    log.debug("delete invoice id = {}", id);
     log.info("delete invoice id = {}", id);
     Invoice deleteInvoice = null;
     List<Invoice> invoiceList = getAll();

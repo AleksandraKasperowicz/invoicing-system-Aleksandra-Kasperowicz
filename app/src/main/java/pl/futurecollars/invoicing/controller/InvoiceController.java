@@ -1,7 +1,7 @@
 package pl.futurecollars.invoicing.controller;
 
 import java.util.List;
-import lombok.Generated;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,18 +11,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.futurecollars.invoicing.Configuration;
-import pl.futurecollars.invoicing.db.FileDatabase;
 import pl.futurecollars.invoicing.model.Invoice;
-import pl.futurecollars.invoicing.service.FileService;
 import pl.futurecollars.invoicing.service.InvoiceService;
 
-@Generated
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("invoices")
 public class InvoiceController {
 
-  final InvoiceService invoiceService = new InvoiceService(new FileDatabase(new FileService(), Configuration.DB_PATH, Configuration.ID_DB_PATH));
+  final InvoiceService invoiceService;
 
   @GetMapping("/getAll")
   public List<Invoice> getAll() {

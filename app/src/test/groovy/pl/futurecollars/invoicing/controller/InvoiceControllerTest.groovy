@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
+import pl.futurecollars.invoicing.model.Company
 import pl.futurecollars.invoicing.model.Invoice
 import spock.lang.Specification
 
@@ -103,7 +104,7 @@ class InvoiceControllerTest extends Specification {
 
     def "invoice data can be modified"() {
         given:
-        def id = addInvoiceAndReturnId(invoiceAsJson(24))
+        def id = addInvoiceAndReturnId(invoiceAsJson(111))
         def updatedInvoice = invoice(111)
         updatedInvoice.id = id
 

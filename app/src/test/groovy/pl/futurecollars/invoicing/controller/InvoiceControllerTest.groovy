@@ -93,7 +93,9 @@ class InvoiceControllerTest extends Specification {
         addMultipleInvoices(12)
 
         expect:
-        mockMvc.perform(put("$ENDPOINT/update/$id").content(invoiceAsJson(1)).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound())
+        mockMvc.perform(put("$ENDPOINT/update/$id")
+                .content(invoiceAsJson(1)).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
 
         where:
         id << [-15, -5, 0, 1000]
@@ -112,7 +114,7 @@ class InvoiceControllerTest extends Specification {
                         .content(objectMapper.writeValueAsString(updatedInvoice))
                         .contentType(MediaType.APPLICATION_JSON)
         )
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
 
         getInvoiceById(id) == updatedInvoice
     }
@@ -167,6 +169,6 @@ class InvoiceControllerTest extends Specification {
 
     private ResultActions deleteInvoice(int id) {
         mockMvc.perform(delete("$ENDPOINT/$id"))
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
     }
 }

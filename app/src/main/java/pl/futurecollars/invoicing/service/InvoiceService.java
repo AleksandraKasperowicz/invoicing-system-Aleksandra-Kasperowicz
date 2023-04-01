@@ -11,7 +11,6 @@ import pl.futurecollars.invoicing.model.Invoice;
 @Service
 @RequiredArgsConstructor
 public class InvoiceService {
-
   private final Database database;
 
   public long save(Invoice invoice) {
@@ -26,12 +25,12 @@ public class InvoiceService {
     return database.getAll();
   }
 
-  public void update(long id, Invoice updatedInvoice) {
-    database.update(id, updatedInvoice);
+  public Optional<Invoice> update(long id, Invoice updatedInvoice) {
+    return database.update(id, updatedInvoice);
   }
 
-  public void delete(long id) {
-    database.delete(id);
+  public Optional<Invoice> delete(long id) {
+    return database.delete(id);
   }
 
   public List<Invoice> getInvoicesByBuyerId(String id) {

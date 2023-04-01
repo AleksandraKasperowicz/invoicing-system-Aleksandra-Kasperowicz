@@ -12,7 +12,6 @@ import pl.futurecollars.invoicing.model.Invoice
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Stepwise
-
 import java.time.LocalDate
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
@@ -47,7 +46,7 @@ class InvoiceControllerStepwiseTest extends Specification {
                 .response
                 .contentAsString
         then:
-        response == "[]"
+        response == "[ ]"
     }
 
 
@@ -120,8 +119,8 @@ class InvoiceControllerStepwiseTest extends Specification {
         mockMvc.perform(put("/invoices/update/" + invoiceId)
                 .content(invoiceAsJson)
                 .contentType(MediaType.APPLICATION_JSON))
-        .andDo(print())
-        .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(status().isNoContent())
     }
 
 
@@ -143,9 +142,18 @@ class InvoiceControllerStepwiseTest extends Specification {
         then:
         invoices == expectedInvoice
     }
+
     def "invoice can be deleted"() {
         expect:
         mockMvc.perform(delete("/invoices/" + invoiceId))
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
+
+        and:
+        mockMvc.perform(delete("/invoices/" + invoiceId))
+                .andExpect(status().isNotFound())
+
+        and:
+        mockMvc.perform(get("/invoices/getById/" + invoiceId))
+                .andExpect(status().isNotFound())
     }
 }

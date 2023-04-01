@@ -28,6 +28,8 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.testng:testng:7.1.0'
+
     // Use the latest Groovy version for Spock testing
     testImplementation "org.codehaus.groovy:groovy:${groovyVersion}"
 
@@ -82,7 +84,8 @@ jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
-                minimum = 0.8
+                counter = 'BRANCH'
+                minimum = 0.80
             }
         }
 
@@ -93,8 +96,7 @@ jacocoTestCoverageVerification {
 
             limit {
                 counter = 'LINE'
-                value = 'TOTALCOUNT'
-                maximum = 0.8
+                minimum = 0.80
             }
         }
     }

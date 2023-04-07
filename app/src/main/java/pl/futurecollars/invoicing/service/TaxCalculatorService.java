@@ -37,8 +37,8 @@ public class TaxCalculatorService {
     return incomingVat(taxIdentificationNumber).subtract(outgoingVat(taxIdentificationNumber));
   }
 
-  public CalculateResult calculateTaxes(String taxIdentificationNumber) {
-    return CalculateResult.builder()
+  public CalculatorResult calculateTaxes(String taxIdentificationNumber) {
+    return CalculatorResult.builder()
         .income(income(taxIdentificationNumber))
         .costs(costs(taxIdentificationNumber))
         .earnings(getEarnings(taxIdentificationNumber))

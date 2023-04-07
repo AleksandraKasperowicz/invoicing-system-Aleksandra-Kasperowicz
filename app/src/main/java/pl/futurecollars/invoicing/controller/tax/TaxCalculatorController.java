@@ -2,7 +2,7 @@ package pl.futurecollars.invoicing.controller.tax;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
-import pl.futurecollars.invoicing.service.CalculateResult;
+import pl.futurecollars.invoicing.service.CalculatorResult;
 import pl.futurecollars.invoicing.service.TaxCalculatorService;
 
 @RestController
@@ -12,7 +12,7 @@ public class TaxCalculatorController implements TaxCalculatorApi {
   private final TaxCalculatorService calculatorService;
 
   @Override
-  public CalculateResult calculateTaxes(String taxIdentificationNumber) {
+  public CalculatorResult calculateTaxes(String taxIdentificationNumber) {
     return calculatorService.calculateTaxes(taxIdentificationNumber);
   }
 }

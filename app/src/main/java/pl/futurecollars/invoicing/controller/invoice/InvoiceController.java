@@ -13,7 +13,7 @@ import pl.futurecollars.invoicing.service.InvoiceService;
 @AllArgsConstructor
 public class InvoiceController implements InvoiceApi {
 
-  final InvoiceService invoiceService;
+  private final InvoiceService invoiceService;
 
   @Override
   public List<Invoice> getAll() {
@@ -35,7 +35,8 @@ public class InvoiceController implements InvoiceApi {
   @Override
   public ResponseEntity<?> deleteById(@PathVariable long id) {
     return invoiceService.delete(id)
-    .map(name -> ResponseEntity.noContent().build()).orElse(ResponseEntity.notFound().build());
+    .map(name -> ResponseEntity.noContent().build())
+    .orElse(ResponseEntity.notFound().build());
   }
 
   @Override

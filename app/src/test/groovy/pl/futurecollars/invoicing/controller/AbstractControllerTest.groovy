@@ -6,9 +6,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.ResultActions
 import pl.futurecollars.invoicing.model.Invoice
-import pl.futurecollars.invoicing.service.CalculateResult
+import pl.futurecollars.invoicing.service.CalculatorResult
 import spock.lang.Specification
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
@@ -29,7 +28,7 @@ class AbstractControllerTest extends Specification {
     ObjectMapper objectMapper
 
     def setup() {
-        getAllInvoices().each { invoice -> deleteInvoice(invoice.id as int) }
+        getAllInvoices().each { invoice -> deleteInvoice(invoice.id) }
     }
 
     int addInvoiceAndReturnId(String invoiceAsJson) {
@@ -71,19 +70,19 @@ class AbstractControllerTest extends Specification {
         objectMapper.readValue(response, Invoice[])
     }
 
-    ResultActions deleteInvoice(int id) {
+    void deleteInvoice(long id) {
         mockMvc.perform(delete("$INVOICE_ENDPOINT/$id"))
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
     }
 
-    CalculateResult calculateTax(String taxIdentificationNumber) {
+    CalculatorResult calculateTax(String taxIdentificationNumber) {
         def response = mockMvc.perform(get("$TAX_CALCULATOR_ENDPOINT/$taxIdentificationNumber"))
                 .andExpect(status().isOk())
                 .andReturn()
                 .response
                 .contentAsString
 
-        objectMapper.readValue(response, CalculateResult)
+        objectMapper.readValue(response, CalculatorResult)
     }
 }
 

@@ -1,15 +1,6 @@
 package pl.futurecollars.invoicing.controller
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.ResultActions
-import pl.futurecollars.invoicing.model.Company
-import pl.futurecollars.invoicing.model.Invoice
-import spock.lang.Specification
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -94,7 +85,7 @@ class InvoiceControllerTest extends AbstractControllerTest {
                         .content(objectMapper.writeValueAsString(updatedInvoice))
                         .contentType(MediaType.APPLICATION_JSON)
         )
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
 
         getInvoiceById(id) == updatedInvoice
     }
@@ -104,7 +95,7 @@ class InvoiceControllerTest extends AbstractControllerTest {
         def invoices = addMultipleInvoices(40)
 
         expect:
-        invoices.each { invoice -> deleteInvoice(invoice.getId() as int) }
+        invoices.each { invoice -> deleteInvoice(invoice.getId()) }
         getAllInvoices().size() == 0
     }
 }

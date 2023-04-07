@@ -77,7 +77,7 @@ class TaxCalculatorControllerTest extends AbstractControllerTest {
         given:
         addMultipleInvoices(15)
         when:
-        def taxCalculatorResponse = calculateTax("12")
+        def taxCalculatorResponse = calculateTax(12 as String)
 
         then:
         taxCalculatorResponse.income == 78000

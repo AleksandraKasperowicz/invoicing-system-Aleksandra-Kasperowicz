@@ -16,9 +16,9 @@ public interface Database {
 
   List<Invoice> getAll();
 
-  void update(long id, Invoice updatedInvoice);
+  Optional<Invoice> update(long id, Invoice updatedInvoice);
 
-  void delete(long id);
+  Optional<Invoice> delete(long id);
 
   default BigDecimal visit(Predicate<Invoice> invoicePredicate, Function<InvoiceEntry, BigDecimal> invoiceEntryToValue) {
     return getAll().stream()

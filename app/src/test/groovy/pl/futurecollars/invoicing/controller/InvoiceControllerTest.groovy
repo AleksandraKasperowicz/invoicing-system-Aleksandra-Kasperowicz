@@ -83,7 +83,7 @@ class InvoiceControllerTest extends AbstractControllerTest {
                         .content(objectMapper.writeValueAsString(updatedInvoice))
                         .contentType(MediaType.APPLICATION_JSON)
         )
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
 
         getInvoiceById(id) == updatedInvoice
     }
@@ -93,7 +93,7 @@ class InvoiceControllerTest extends AbstractControllerTest {
         def invoices = addMultipleInvoices(40)
 
         expect:
-        invoices.each { invoice -> deleteInvoice(invoice.getId() as int) }
+        invoices.each { invoice -> deleteInvoice(invoice.getId()) }
         getAllInvoices().size() == 0
     }
 }

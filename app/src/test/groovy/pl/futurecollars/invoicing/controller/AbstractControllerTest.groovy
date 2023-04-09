@@ -6,9 +6,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.ResultActions
-import pl.futurecollars.invoicing.model.Company
 import pl.futurecollars.invoicing.model.Invoice
+import pl.futurecollars.invoicing.model.Company
 import pl.futurecollars.invoicing.service.CalculatorResult
 import spock.lang.Specification
 
@@ -30,7 +29,7 @@ class AbstractControllerTest extends Specification {
     ObjectMapper objectMapper
 
     def setup() {
-        getAllInvoices().each { invoice -> deleteInvoice(invoice.id as int) }
+        getAllInvoices().each { invoice -> deleteInvoice(invoice.id) }
     }
 
     int addInvoiceAndReturnId(Invoice invoice) {
@@ -72,9 +71,9 @@ class AbstractControllerTest extends Specification {
         objectMapper.readValue(response, Invoice[])
     }
 
-    ResultActions deleteInvoice(int id) {
+    void deleteInvoice(long id) {
         mockMvc.perform(delete("$INVOICE_ENDPOINT/$id"))
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
     }
 
     CalculatorResult calculateTax(Company company) {

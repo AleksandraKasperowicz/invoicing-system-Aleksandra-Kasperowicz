@@ -72,11 +72,10 @@ class InvoiceServiceTest extends Specification {
 
     def "should return exceptions"() {
         when:
-        service.update(555, invoices.get(1))
+        Optional<Invoice> invoice = service.update(555, invoices.get(1))
 
         then:
-        def exception = thrown(IllegalArgumentException)
-        exception.message == "Faktura o numerze: 555 nie istnieje"
+        invoice.isEmpty()
     }
 
 

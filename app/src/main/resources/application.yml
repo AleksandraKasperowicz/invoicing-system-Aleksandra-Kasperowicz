@@ -20,6 +20,6 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
   profiles:
-      active: memory
+      active: sql
   flyway:
       enabled: false

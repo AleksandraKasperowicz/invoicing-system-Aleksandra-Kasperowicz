@@ -18,12 +18,12 @@ abstract class AbstractDatabaseTest extends Specification {
 
     def "should save invoices returning id, should have correct id and get id return correct invoice "() {
         when:
-        def ids = invoices.collect({ database.save(it) })
+        def ids = invoices.collect { database.save(it) }
 
         then:
         ids.size() == (1..invoices.size()).collect().size()
-        ids.forEach({ assert database.getById(it).isPresent() })
-        ids.forEach({ assert database.getById(it).get().getId() == it })
+        ids.forEach { assert database.getById(it).isPresent() }
+        ids.forEach { assert database.getById(it).get().getId() == it }
     }
 
     def "should return empty optional"() {
@@ -56,7 +56,7 @@ abstract class AbstractDatabaseTest extends Specification {
 
         then:
         allInvoices.size() == invoices.size()
-        allInvoices.forEach({ assert it == invoices.get(it.getId() - 1 as int) })
+        allInvoices.forEach{ assert it == invoices.get(it.getId() - 1 as int) }
     }
 
 
@@ -75,7 +75,7 @@ abstract class AbstractDatabaseTest extends Specification {
 
         then:
         database.getAll().size() == sizeBeforeDelete - 1
-        database.getAll().forEach({ assert it.getId() != 1 })
+        database.getAll().forEach { assert it.getId() != 1 }
     }
 }
 

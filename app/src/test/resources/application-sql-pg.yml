@@ -1,16 +1,11 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/invoicing
+    url: jdbc:postgresql://localhost:5432/invoicing-test
     username: postgres
     password: 4004
     driver-class-name: org.postgresql.Driver
   flyway:
     enabled: true
-    out-of-order: true
-    ignore-migration-patterns:
-      - "*:ignored"
-      - "*:missing"
-      - "*:pending"
 
   invoicing-system:
     database: sql

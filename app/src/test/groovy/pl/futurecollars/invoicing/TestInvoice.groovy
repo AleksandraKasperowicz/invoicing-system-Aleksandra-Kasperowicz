@@ -12,6 +12,7 @@ class TestInvoice {
     static company(int id) {
         Company.builder()
                 .id("$id")
+                .name("$id") // added by MB
                 .taxIdentificationNumber("$id")
                 .address("ul. Wojska Polskiego/$id 02-703 Warszawa, Polska, iCode Trust $id Sp. z o.o")
                 .pensionInsurance(BigDecimal.TEN * BigDecimal.valueOf(id))
@@ -30,6 +31,7 @@ class TestInvoice {
 
     static invoice(int id) {
         Invoice.builder()
+                .number(String.valueOf(id)) // added by MB
                 .date(LocalDate.now())
                 .buyer(company(id + 10))
                 .seller(company(id))

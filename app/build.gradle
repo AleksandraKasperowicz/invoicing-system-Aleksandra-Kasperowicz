@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        flywayVersion = '9.8.1'
+        flywayVersion = '9.4.0'
         lombokVersion = '1.18.24'
         spockVersion = '2.0-groovy-3.0'
         springBootVersion = '2.7.8'
@@ -20,7 +20,7 @@ plugins {
     id 'jacoco'
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${springDependencyManagmentVersion}"
-    id "org.flywaydb.flyway" version "9.8.1"
+    id "org.flywaydb.flyway" version "9.4.0"
 }
 
 
@@ -60,7 +60,7 @@ dependencies {
 
     implementation "org.flywaydb:flyway-core:${flywayVersion}"
 
-    runtimeOnly "com.h2database:h2:1.4.200"
+    runtimeOnly "com.h2database:h2-mvstore:2.1.210"
     runtimeOnly "org.postgresql:postgresql:42.2.19"
 }
 
@@ -120,7 +120,19 @@ task testWithMemoryDatabase(type: Test) {
 
 task testWithSqlDatabase(type: Test) {
     systemProperty 'spring.profiles.active', 'sql'
+
+task testWithPostgreSqlDatabase(type: Test) { // only for local use
+    systemProperty 'spring.profiles.active', 'sql-pg'
+    }
 }
 check.dependsOn testWithFileDatabase
 check.dependsOn testWithMemoryDatabase
+check.dependsOn testWithSqlDatabase
+
+flyway {
+    driver = 'org.postgresql.Driver'
+    url = 'jdbc:postgresql://localhost:5432/invoicing'
+    user = 'postgres'
+    password = '4004'
+}
 

@@ -70,7 +70,6 @@ public class SqlDatabase implements Database {
       ps.setLong(4, sellerId);
       return ps;
     }, keyHolder);
-
     return Objects.requireNonNull(keyHolder.getKey()).intValue();
   }
 
@@ -114,7 +113,6 @@ public class SqlDatabase implements Database {
   @Override
   public Optional<Invoice> getById(long id) {
     List<Invoice> invoices = jdbcTemplate.query(SELECT_QUERY + " where i.id = " + id, invoiceRowMapper());
-
     return invoices.isEmpty() ? Optional.empty() : Optional.of(invoices.get(0));
   }
 
@@ -177,7 +175,6 @@ public class SqlDatabase implements Database {
   @Transactional
   public Optional<Invoice> update(long id, Invoice updatedInvoice) {
     Optional<Invoice> originalInvoice = getById(id);
-
     if (originalInvoice.isEmpty()) {
       return originalInvoice;
     }

@@ -121,7 +121,7 @@ task testWithMemoryDatabase(type: Test) {
 task testWithSqlDatabase(type: Test) {
     systemProperty 'spring.profiles.active', 'sql'
 
-task testWithPostgreSqlDatabase(type: Test) { // only for local use
+task testWithPostgreSqlDatabase(type: Test) {
     systemProperty 'spring.profiles.active', 'sql-pg'
     }
 }

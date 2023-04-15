@@ -6,11 +6,21 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType
 import pl.futurecollars.invoicing.AbstractDatabaseTest
 import pl.futurecollars.invoicing.db.Database
-import spock.lang.Specification
+import pl.futurecollars.invoicing.model.Invoice
 
 import javax.sql.DataSource
 
+import static pl.futurecollars.invoicing.TestInvoice.invoice
+
+
 class SqlDatabaseTest extends AbstractDatabaseTest {
+
+    List<Invoice> invoices = (1..12).collect { invoice(it) }
+
+    def setup() {
+        database = initDatabase()
+        invoices.collect({ database.save(it) })
+    }
 
     @Override
     Database initDatabase() {

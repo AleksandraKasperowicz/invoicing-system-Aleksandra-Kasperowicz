@@ -6,9 +6,9 @@
     "id" : "2",
     "taxIdentificationNumber" : "2",
     "address" : "ul. Wojska Polskiego/2 02-703 Warszawa, Polska, iCode Trust 2 Sp. z o.o",
-    "name" : null,
-    "pensionInsurance" : 20,
-    "healthInsurance" : 200
+    "name" : "2",
+    "pensionInsurance" : 20.00,
+    "healthInsurance" : 200.00
   },
   "seller" : {
     "id" : null,
@@ -42,9 +42,9 @@
     "id" : "4",
     "taxIdentificationNumber" : "4",
     "address" : "ul. Wojska Polskiego/4 02-703 Warszawa, Polska, iCode Trust 4 Sp. z o.o",
-    "name" : null,
-    "pensionInsurance" : 40,
-    "healthInsurance" : 400
+    "name" : "4",
+    "pensionInsurance" : 40.00,
+    "healthInsurance" : 400.00
   },
   "entries" : [ {
     "description" : null,

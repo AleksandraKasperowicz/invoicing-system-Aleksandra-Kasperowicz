@@ -48,7 +48,6 @@ abstract class AbstractDatabaseTest extends Specification {
 
         then:
         invoice.isPresent()
-
     }
 
     def "should return get all invoices"() {
@@ -84,17 +83,5 @@ abstract class AbstractDatabaseTest extends Specification {
         then:
         database.getAll().size() == sizeBeforeDelete - 1
         database.getAll().forEach { assert it.getId() != 1 }
-    }
-
-    /*Invoice resetIds(Invoice invoice) {
-        invoice.getBuyer().id = 0
-        invoice.getSeller().id = 0
-        invoice
-    }*/
-
-    private static Invoice resetIds(Invoice invoice) {
-        invoice.getBuyer().id = 0
-        invoice.getSeller().id = 0
-        invoice
     }
 }

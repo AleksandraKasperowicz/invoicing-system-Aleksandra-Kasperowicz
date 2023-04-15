@@ -12,7 +12,6 @@ import javax.sql.DataSource
 
 import static pl.futurecollars.invoicing.TestInvoice.invoice
 
-
 class SqlDatabaseTest extends AbstractDatabaseTest {
 
     List<Invoice> invoices = (1..12).collect { invoice(it) }

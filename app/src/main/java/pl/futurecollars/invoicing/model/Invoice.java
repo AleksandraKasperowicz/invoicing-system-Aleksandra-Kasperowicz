@@ -17,18 +17,11 @@ public class Invoice {
   @ApiModelProperty(value = "Invoice ID ", required = true, example = "1")
   private Long id;
   @ApiModelProperty(value = "operation date", example = "2023-03-18")
-  private LocalDate data;
+  private LocalDate date;
   @ApiModelProperty(value = "company who bought", required = true)
   private Company buyer;
   @ApiModelProperty(value = "company who is selling", required = true)
   private Company seller;
   @ApiModelProperty(value = "list of products", required = true)
   private List<InvoiceEntry> entries;
-
-  public Invoice(LocalDate data, Company buyer, Company seller, List<InvoiceEntry> entries) {
-    this.data = data;
-    this.buyer = buyer;
-    this.seller = seller;
-    this.entries = entries;
-  }
 }

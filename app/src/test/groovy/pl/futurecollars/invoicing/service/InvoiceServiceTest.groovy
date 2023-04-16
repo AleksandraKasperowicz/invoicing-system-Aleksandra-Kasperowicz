@@ -13,7 +13,7 @@ class InvoiceServiceTest extends Specification {
 
     def "setup"() {
         service = new InvoiceService(new InMemoryDatabase())
-        invoices = (1..12).collect({ invoice(it) })
+        invoices = (1..12).collect { invoice(it) }
     }
 
     def "should save invoices returning id, should have correct id and get id return correct invoice "() {
@@ -84,7 +84,7 @@ class InvoiceServiceTest extends Specification {
         invoices.forEach({ service.save(it) })
 
         then:
-        !service.getInvoicesByBuyerId("1111111111").isEmpty()
+        !service.getInvoicesByBuyerId("11").isEmpty()
 
     }
 
@@ -93,7 +93,7 @@ class InvoiceServiceTest extends Specification {
         invoices.forEach({ service.save(it) })
 
         then:
-        !service.getInvoicesBySellerId("1111111111").isEmpty()
+        !service.getInvoicesBySellerId("11").isEmpty()
 
     }
 }

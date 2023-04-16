@@ -16,7 +16,7 @@ import pl.futurecollars.invoicing.model.Invoice;
 @Repository
 public class InMemoryDatabase implements Database {
 
-  final Map<Long, Invoice> invoices = new HashMap<>();
+  private final Map<Long, Invoice> invoices = new HashMap<>();
   private long currentId = 0;
 
   @Override

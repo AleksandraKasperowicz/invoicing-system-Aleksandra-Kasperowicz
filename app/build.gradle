@@ -36,6 +36,7 @@ dependencies {
     // Use the awesome Spock testing and specification framework even with Java
     testImplementation "org.spockframework:spock-core:${spockVersion}"
     testImplementation "org.spockframework:spock-spring:${spockVersion}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "junit:junit:4.13.2"
 
     // This dependency is used by the application.
@@ -49,7 +50,7 @@ dependencies {
 
     implementation "org.springframework.boot:spring-boot-starter-web"
 
-    testImplementation "org.springframework.boot:spring-boot-starter-test"
+
 
     implementation "io.springfox:springfox-boot-starter:${springfoxVersion}"
     implementation "io.springfox:springfox-swagger-ui:${springfoxVersion}"

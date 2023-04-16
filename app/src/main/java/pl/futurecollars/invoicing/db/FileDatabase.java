@@ -65,7 +65,7 @@ public class FileDatabase implements Database {
         .findFirst();
 
     if (invoiceToBeUpdated.isPresent()) {
-      invoiceToBeUpdated.get().setData(updatedInvoice.getData());
+      invoiceToBeUpdated.get().setDate(updatedInvoice.getDate());
       invoiceToBeUpdated.get().setBuyer(updatedInvoice.getBuyer());
       invoiceToBeUpdated.get().setSeller(updatedInvoice.getSeller());
       fileService.writeDataToFile(config.getInvoicePath(), invoicesList);

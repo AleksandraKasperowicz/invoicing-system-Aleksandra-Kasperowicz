@@ -34,11 +34,11 @@ abstract class AbstractDatabaseTest extends Specification {
         given:
         def invoice = database.getById(3)
         when:
-        invoice.get().setData(LocalDate.now())
+        invoice.get().setDate(LocalDate.now())
         database.update(3, invoice.get())
 
         then:
-        database.getById(3).get().getData() == LocalDate.now()
+        database.getById(3).get().getDate() == LocalDate.now()
     }
     def "should get by id "(){
 

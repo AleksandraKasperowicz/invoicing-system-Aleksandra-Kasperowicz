@@ -6,8 +6,12 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
+import pl.futurecollars.invoicing.db.Database;
+import pl.futurecollars.invoicing.sql.SqlDatabase;
 
 @Configuration
 @NoArgsConstructor
@@ -25,5 +29,11 @@ public class AppConfiguration {
     objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
     return objectMapper;
+  }
+
+  @Bean
+  @ConditionalOnProperty(name = "invoicing-system.database", havingValue = "sql")
+  public Database sqlDatabase(JdbcTemplate jdbcTemplate) {
+    return new SqlDatabase(jdbcTemplate);
   }
 }

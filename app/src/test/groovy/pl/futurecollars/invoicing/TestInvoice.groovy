@@ -12,24 +12,26 @@ class TestInvoice {
     static company(int id) {
         Company.builder()
                 .id("$id")
+                .name("$id")
                 .taxIdentificationNumber("$id")
                 .address("ul. Wojska Polskiego/$id 02-703 Warszawa, Polska, iCode Trust $id Sp. z o.o")
-                .pensionInsurance(BigDecimal.TEN * BigDecimal.valueOf(id))
-                .healthInsurance(BigDecimal.valueOf(100) * BigDecimal.valueOf(id))
+                .pensionInsurance(BigDecimal.TEN * BigDecimal.valueOf(id).setScale(2))
+                .healthInsurance(BigDecimal.valueOf(100) * BigDecimal.valueOf(id).setScale(2))
                 .build()
     }
 
     static product(int id) {
         InvoiceEntry.builder()
                 .description("Programming course $id")
-                .netPrice(BigDecimal.valueOf(id * 1000))
-                .valueVat(BigDecimal.valueOf(id * 1000 * 0.08))
+                .netPrice(BigDecimal.valueOf(id * 1000).setScale(2))
+                .valueVat(BigDecimal.valueOf(id * 1000 * 0.08).setScale(2))
                 .rateVat(Vat.VAT8)
                 .build()
     }
 
     static invoice(int id) {
         Invoice.builder()
+                .number(String.valueOf(id))
                 .date(LocalDate.now())
                 .buyer(company(id + 10))
                 .seller(company(id))

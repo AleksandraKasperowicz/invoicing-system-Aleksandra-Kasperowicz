@@ -10,8 +10,4 @@ CREATE TABLE public.vat
  values ('23', 0.23),
         ('8', 0.08),
         ('5', 0.05),
-        ('0', 0.00),
-        ('ZW', 0.00);
-
- ALTER TABLE public.vat
-     OWNER to postgres;
+        ('0', 0.00);

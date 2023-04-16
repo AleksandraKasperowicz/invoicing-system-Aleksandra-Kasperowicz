@@ -2,7 +2,6 @@ package pl.futurecollars.invoicing.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.futurecollars.invoicing.db.Database;
@@ -31,23 +30,5 @@ public class InvoiceService {
 
   public Optional<Invoice> delete(long id) {
     return database.delete(id);
-  }
-
-  public List<Invoice> getInvoicesByBuyerId(String id) {
-
-    List<Invoice> allInvoices = getAll();
-    return allInvoices
-        .stream()
-        .filter(i -> i.getBuyer().getId().equals(id))
-        .collect(Collectors.toList());
-  }
-
-  public List<Invoice> getInvoicesBySellerId(String id) {
-
-    List<Invoice> allInvoices = getAll();
-    return allInvoices
-        .stream()
-        .filter(i -> i.getSeller().getId().equals(id))
-        .collect(Collectors.toList());
   }
 }

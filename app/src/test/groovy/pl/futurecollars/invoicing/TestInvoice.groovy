@@ -9,9 +9,8 @@ import java.time.LocalDate
 
 class TestInvoice {
 
-    static company(int id) {
+    static company(long id) {
         Company.builder()
-                .id("$id")
                 .name("$id")
                 .taxIdentificationNumber("$id")
                 .address("ul. Wojska Polskiego/$id 02-703 Warszawa, Polska, iCode Trust $id Sp. z o.o")
@@ -20,16 +19,17 @@ class TestInvoice {
                 .build()
     }
 
-    static product(int id) {
+    static product(long id) {
         InvoiceEntry.builder()
                 .description("Programming course $id")
+                .quantity(22.00)
                 .netPrice(BigDecimal.valueOf(id * 1000).setScale(2))
-                .valueVat(BigDecimal.valueOf(id * 1000 * 0.08).setScale(2))
-                .rateVat(Vat.VAT8)
+                .vatValue(BigDecimal.valueOf(id * 1000 * 0.08).setScale(2))
+                .vatRate(Vat.VAT8)
                 .build()
     }
 
-    static invoice(int id) {
+    static invoice(long id) {
         Invoice.builder()
                 .number(String.valueOf(id))
                 .date(LocalDate.now())

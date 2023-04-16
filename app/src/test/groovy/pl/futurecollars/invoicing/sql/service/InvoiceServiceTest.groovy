@@ -1,7 +1,8 @@
-package pl.futurecollars.invoicing.service
+package pl.futurecollars.invoicing.sql.service
 
 import pl.futurecollars.invoicing.db.memory.InMemoryDatabase
 import pl.futurecollars.invoicing.model.Invoice
+import pl.futurecollars.invoicing.service.InvoiceService
 import spock.lang.Specification
 
 import static pl.futurecollars.invoicing.TestInvoice.invoice
@@ -78,22 +79,22 @@ class InvoiceServiceTest extends Specification {
         invoice.isEmpty()
     }
 
+//
+//    def "GetInvoicesByBuyer"() {
+//        when:
+//        invoices.forEach({ service.save(it) })
+//
+//        then:
+//        !service.getInvoicesByBuyerId(11).isEmpty()
+//
+//    }
+//
+//    def "GetInvoicesBySeller"() {
+//        when:
+//        invoices.forEach({ service.save(it) })
+//
+//        then:
+//        !service.getInvoicesBySellerId(11).isEmpty()
 
-    def "GetInvoicesByBuyer"() {
-        when:
-        invoices.forEach({ service.save(it) })
-
-        then:
-        !service.getInvoicesByBuyerId("11").isEmpty()
-
-    }
-
-    def "GetInvoicesBySeller"() {
-        when:
-        invoices.forEach({ service.save(it) })
-
-        then:
-        !service.getInvoicesBySellerId("11").isEmpty()
-
-    }
+//    }
 }

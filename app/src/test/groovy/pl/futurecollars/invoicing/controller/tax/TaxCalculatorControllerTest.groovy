@@ -102,7 +102,7 @@ class TaxCalculatorControllerTest extends AbstractControllerTest {
                 .buyer(company(2))
                 .entries(List.of(
                         InvoiceEntry.builder()
-                                .valueVat(BigDecimal.valueOf(23.45))
+                                .vatValue(BigDecimal.valueOf(23.45))
                                 .netPrice(BigDecimal.valueOf(100))
                                 .expenseRelatedToCar(
                                         Car.builder()

@@ -3,7 +3,7 @@
   "number" : null,
   "date" : null,
   "buyer" : {
-    "id" : "2",
+    "id" : null,
     "taxIdentificationNumber" : "2",
     "address" : "ul. Wojska Polskiego/2 02-703 Warszawa, Polska, iCode Trust 2 Sp. z o.o",
     "name" : "2",
@@ -20,10 +20,10 @@
   },
   "entries" : [ {
     "description" : null,
-    "quantity" : 0,
+    "quantity" : null,
     "netPrice" : 76011.62,
-    "valueVat" : 0,
-    "rateVat" : null,
+    "vatValue" : 0,
+    "vatRate" : null,
     "expenseRelatedToCar" : null
   } ]
 }, {
@@ -39,7 +39,7 @@
     "healthInsurance" : 319.94
   },
   "seller" : {
-    "id" : "4",
+    "id" : null,
     "taxIdentificationNumber" : "4",
     "address" : "ul. Wojska Polskiego/4 02-703 Warszawa, Polska, iCode Trust 4 Sp. z o.o",
     "name" : "4",
@@ -48,10 +48,10 @@
   },
   "entries" : [ {
     "description" : null,
-    "quantity" : 0,
+    "quantity" : null,
     "netPrice" : 11329.47,
-    "valueVat" : 0,
-    "rateVat" : null,
+    "vatValue" : 0,
+    "vatRate" : null,
     "expenseRelatedToCar" : null
   } ]
 } ]

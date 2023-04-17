@@ -1,21 +1,25 @@
 package pl.futurecollars.invoicing.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.mongodb.client.MongoDatabase
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.ApplicationContext
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import pl.futurecollars.invoicing.TestInvoice
 import pl.futurecollars.invoicing.model.Invoice
+import spock.lang.Requires
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Stepwise
+
 import java.time.LocalDate
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -34,6 +38,16 @@ class InvoiceControllerStepwiseTest extends Specification {
     private Invoice originalInvoice = TestInvoice.invoice(1)
 
     private LocalDate updateDate = LocalDate.now()
+
+    @Autowired
+    private ApplicationContext context
+
+    @Requires({ System.getProperty('spring.profiles.active', 'memory').contains("mongo") })
+    def "database is dropped to ensure clean state"() {
+        expect:
+        MongoDatabase mongoDatabase = context.getBean(MongoDatabase)
+        mongoDatabase.drop()
+    }
 
     def "empty array is returned when no invoices were created"() {
         given:

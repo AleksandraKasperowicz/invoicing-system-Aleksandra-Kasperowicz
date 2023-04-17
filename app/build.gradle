@@ -1,6 +1,7 @@
 buildscript {
     ext {
         flywayVersion = '9.4.0'
+        mongoVersion = '3.12.8'
         lombokVersion = '1.18.24'
         spockVersion = '2.0-groovy-3.0'
         springBootVersion = '2.7.8'
@@ -56,6 +57,8 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
+    implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
+
     implementation "io.springfox:springfox-boot-starter:${springfoxVersion}"
     implementation "io.springfox:springfox-swagger-ui:${springfoxVersion}"
 
@@ -91,6 +94,7 @@ tasks.named('build') {
 }
 
 jacocoTestCoverageVerification {
+    executionData tasks.withType(Test)
     violationRules {
         rule {
             limit {
@@ -111,6 +115,12 @@ jacocoTestCoverageVerification {
         }
     }
 }
+
+jacocoTestReport {
+    executionData tasks.withType(Test)
+    dependsOn check
+}
+
 task testWithFileDatabase(type: Test) {
     systemProperty 'spring.profiles.active', 'file'
 }
@@ -130,8 +140,8 @@ task testWithJpaFlywayDatabase(type: Test) {
     systemProperty 'spring.profiles.active', 'jpa-flyway'
 }
 
-task testWithPostgreSqlDatabase(type: Test) {
-    systemProperty 'spring.profiles.active', 'sql-pg'
+task  testWithMongoDatabase(type: Test) {
+    systemProperty 'spring.profiles.active', 'mongo'
     }
 
 check.dependsOn testWithFileDatabase
@@ -139,6 +149,7 @@ check.dependsOn testWithMemoryDatabase
 check.dependsOn testWithSqlDatabase
 check.dependsOn testWithJpaDatabase
 check.dependsOn testWithJpaFlywayDatabase
+check.dependsOn testWithMongoDatabase
 
 flyway {
     driver = 'org.postgresql.Driver'
@@ -149,6 +160,9 @@ flyway {
 
 String osName = System.getProperty("os.name").toLowerCase()
 if (osName.contains("mac")) {
+    task testWithPostgreSqlDatabase(type: Test) {
+    systemProperty 'spring.profiles.active', 'sql-pg' }
+
     check.dependsOn testWithPostgreSqlDatabase
 }
 

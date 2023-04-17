@@ -1,0 +1,21 @@
+package pl.futurecollars.invoicing.mongo
+
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.annotation.IfProfileValue
+import pl.futurecollars.invoicing.AbstractDatabaseTest
+import pl.futurecollars.invoicing.db.Database
+
+@SpringBootTest
+@IfProfileValue(name = "spring.profiles.active", value = "mongo")
+class MongoBasedDatabaseTest extends AbstractDatabaseTest{
+
+    @Autowired
+    private MongoBasedDatabase mongoDatabase
+
+    @Override
+    Database initDatabase() {
+        assert  mongoDatabase != null
+        mongoDatabase
+    }
+}

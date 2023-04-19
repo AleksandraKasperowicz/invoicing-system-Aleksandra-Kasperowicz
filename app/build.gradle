@@ -114,55 +114,61 @@ jacocoTestCoverageVerification {
             }
         }
     }
-}
-
-jacocoTestReport {
-    executionData tasks.withType(Test)
-    dependsOn check
-}
-
-task testWithFileDatabase(type: Test) {
-    systemProperty 'spring.profiles.active', 'file'
-}
-
-task testWithMemoryDatabase(type: Test) {
-    systemProperty 'spring.profiles.active', 'memory'
-}
-
-task testWithSqlDatabase(type: Test) {
-    systemProperty 'spring.profiles.active', 'sql'
-}
-task testWithJpaDatabase(type: Test) {
-    systemProperty 'spring.profiles.active', 'jpa'
-}
-
-task testWithJpaFlywayDatabase(type: Test) {
-    systemProperty 'spring.profiles.active', 'jpa-flyway'
-}
-
-task  testWithMongoDatabase(type: Test) {
-    systemProperty 'spring.profiles.active', 'mongo'
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: 'pl/futurecollars/invoicing/jpa/**')
+            fileTree(dir: it, exclude: 'pl/futurecollars/invoicing/mongo/**')
+        }))
     }
 
-check.dependsOn testWithFileDatabase
-check.dependsOn testWithMemoryDatabase
-check.dependsOn testWithSqlDatabase
-check.dependsOn testWithJpaDatabase
-check.dependsOn testWithJpaFlywayDatabase
-check.dependsOn testWithMongoDatabase
+    jacocoTestReport {
+        executionData tasks.withType(Test)
+        dependsOn check
+    }
 
-flyway {
-    driver = 'org.postgresql.Driver'
-    url = 'jdbc:postgresql://localhost:5432/invoicing'
-    user = 'postgres'
-    password = '4004'
+    task testWithFileDatabase(type: Test) {
+        systemProperty 'spring.profiles.active', 'file'
+    }
+
+    task testWithMemoryDatabase(type: Test) {
+        systemProperty 'spring.profiles.active', 'memory'
+    }
+
+    task testWithSqlDatabase(type: Test) {
+        systemProperty 'spring.profiles.active', 'sql'
+    }
+    task testWithJpaDatabase(type: Test) {
+        systemProperty 'spring.profiles.active', 'jpa'
+    }
+
+    task testWithJpaFlywayDatabase(type: Test) {
+        systemProperty 'spring.profiles.active', 'jpa-flyway'
+    }
+
+    task testWithMongoDatabase(type: Test) {
+        systemProperty 'spring.profiles.active', 'mongo'
+    }
+
+    check.dependsOn testWithFileDatabase
+    check.dependsOn testWithMemoryDatabase
+    check.dependsOn testWithSqlDatabase
+    check.dependsOn testWithJpaDatabase
+    check.dependsOn testWithJpaFlywayDatabase
+    check.dependsOn testWithMongoDatabase
+
+    flyway {
+        driver = 'org.postgresql.Driver'
+        url = 'jdbc:postgresql://localhost:5432/invoicing'
+        user = 'postgres'
+        password = '4004'
+    }
+
+    String osName = System.getProperty("os.name").toLowerCase()
+    if (osName.contains("mac")) {
+        task testWithPostgreSqlDatabase(type: Test) {
+            systemProperty 'spring.profiles.active', 'sql-pg'
+        }
+
+        check.dependsOn testWithPostgreSqlDatabase
+    }
 }
-
-String osName = System.getProperty("os.name").toLowerCase()
-if (osName.contains("mac")) {
-    task testWithPostgreSqlDatabase(type: Test) {
-    systemProperty 'spring.profiles.active', 'sql-pg' }
-
-    check.dependsOn testWithPostgreSqlDatabase
-}
-

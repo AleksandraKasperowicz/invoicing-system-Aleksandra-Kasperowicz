@@ -18,7 +18,7 @@ public class MongoBasedDatabase implements Database {
 
   @Override
   public long save(Invoice invoice) {
-    invoice.setId((idProvider.getNextIdAndIncrement()));
+    invoice.setId(idProvider.getNextIdAndIncrement());
     invoices.insertOne(invoice);
 
     return invoice.getId();

@@ -1,6 +1,6 @@
 package pl.futurecollars.invoicing.db.memory
 
-import pl.futurecollars.invoicing.AbstractDatabaseTest
+import pl.futurecollars.invoicing.db.AbstractDatabaseTest
 import pl.futurecollars.invoicing.db.Database
 
 class InMemoryDatabaseTest extends AbstractDatabaseTest {

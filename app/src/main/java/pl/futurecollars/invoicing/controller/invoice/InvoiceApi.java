@@ -20,21 +20,24 @@ import pl.futurecollars.invoicing.model.Invoice;
 public interface InvoiceApi {
 
   @ApiOperation(value = "API to list all invoices in the system")
-  @GetMapping("/getAll")
+  @GetMapping
   List<Invoice> getAll();
 
-  @PostMapping("/add")
+  @ApiOperation(value = "Add new invoice to system")
+  @PostMapping
   long add(@RequestBody Invoice invoice);
 
   @ApiOperation(value = "API to get invoice by ID")
   @ApiResponses(value = {
       @ApiResponse(code = 404, message = "Invoice not found")})
-  @GetMapping("/getById/{id}")
+  @GetMapping(value = "/{id}")
   ResponseEntity<Invoice> getById(@PathVariable long id);
 
+  @ApiOperation(value = "Delete invoice with given id")
   @DeleteMapping("/{id}")
   ResponseEntity<?> deleteById(@PathVariable long id);
 
-  @PutMapping("/update/{id}")
+  @ApiOperation(value = "Update invoice with given id")
+  @PutMapping("{id}")
   ResponseEntity<?> update(@PathVariable long id, @RequestBody Invoice invoice);
 }

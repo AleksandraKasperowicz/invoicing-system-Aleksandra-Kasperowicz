@@ -24,7 +24,6 @@ plugins {
     id "org.flywaydb.flyway" version "9.4.0"
 }
 
-
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
@@ -114,56 +113,68 @@ jacocoTestCoverageVerification {
             }
         }
     }
-    afterEvaluate {
-        classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: 'pl/futurecollars/invoicing/jpa/**')
-            fileTree(dir: it, exclude: 'pl/futurecollars/invoicing/mongo/**')
-        }))
+        afterEvaluate {
+            classDirectories.setFrom(files(classDirectories.files.collect {
+                fileTree(dir: it, excludes: [
+                        'pl/futurecollars/invoicing/db/jpa/**',
+                        'pl/futurecollars/invoicing/db/mongo/**',
+                        'pl/futurecollars/invoicing/db/sql/**'
+                ])
+            }))
     }
+}
 
-    jacocoTestReport {
-        executionData tasks.withType(Test)
-        dependsOn check
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(15)
+        vendor = JvmVendorSpec.ADOPTOPENJDK
     }
+}
 
-    task testWithFileDatabase(type: Test) {
-        systemProperty 'spring.profiles.active', 'file'
-    }
 
-    task testWithMemoryDatabase(type: Test) {
-        systemProperty 'spring.profiles.active', 'memory'
-    }
+jacocoTestReport {
+    executionData tasks.withType(Test)
+    dependsOn check
+}
 
-    task testWithSqlDatabase(type: Test) {
-        systemProperty 'spring.profiles.active', 'sql'
-    }
-    task testWithJpaDatabase(type: Test) {
-        systemProperty 'spring.profiles.active', 'jpa'
-    }
+task testWithFileDatabase(type: Test) {
+    systemProperty 'spring.profiles.active', 'file'
+}
 
-    task testWithJpaFlywayDatabase(type: Test) {
-        systemProperty 'spring.profiles.active', 'jpa-flyway'
-    }
+task testWithMemoryDatabase(type: Test) {
+     systemProperty 'spring.profiles.active', 'memory'
+}
 
-    task testWithMongoDatabase(type: Test) {
-        systemProperty 'spring.profiles.active', 'mongo'
-    }
+ task testWithSqlDatabase(type: Test) {
+     systemProperty 'spring.profiles.active', 'sql'
+}
+task testWithJpaDatabase(type: Test) {
+     systemProperty 'spring.profiles.active', 'jpa'
+}
 
-    check.dependsOn testWithFileDatabase
-    check.dependsOn testWithMemoryDatabase
-    check.dependsOn testWithSqlDatabase
-    check.dependsOn testWithJpaDatabase
-    check.dependsOn testWithJpaFlywayDatabase
-    check.dependsOn testWithMongoDatabase
+task testWithJpaFlywayDatabase(type: Test) {
+     systemProperty 'spring.profiles.active', 'jpa-flyway'
+}
 
-    flyway {
-        driver = 'org.postgresql.Driver'
-        url = 'jdbc:postgresql://localhost:5432/invoicing'
-        user = 'postgres'
-        password = '4004'
-    }
+task testWithMongoDatabase(type: Test) {
+    systemProperty 'spring.profiles.active', 'mongo'
+}
 
-    String osName = System.getProperty("os.name").toLowerCase()
+check.dependsOn testWithFileDatabase
+check.dependsOn testWithMemoryDatabase
+check.dependsOn testWithSqlDatabase
+check.dependsOn testWithJpaDatabase
+check.dependsOn testWithJpaFlywayDatabase
+check.dependsOn testWithMongoDatabase
+
+flyway {
+     driver = 'org.postgresql.Driver'
+     url = 'jdbc:postgresql://localhost:5432/invoicing'
+     user = 'postgres'
+     password = '4004'
+}
+
+String osName = System.getProperty("os.name").toLowerCase()
     if (osName.contains("mac")) {
         task testWithPostgreSqlDatabase(type: Test) {
             systemProperty 'spring.profiles.active', 'sql-pg'
@@ -171,4 +182,9 @@ jacocoTestCoverageVerification {
 
         check.dependsOn testWithPostgreSqlDatabase
     }
-}
+ tasks.withType(JavaCompile) {
+      options.compilerArgs << "-Xlint:all" << "-Xlint:-processing" << "-Werror"
+        }
+
+
+

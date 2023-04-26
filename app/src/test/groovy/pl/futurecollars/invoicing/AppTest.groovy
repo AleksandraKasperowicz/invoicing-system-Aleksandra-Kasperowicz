@@ -8,8 +8,8 @@ import spock.lang.Specification
 @SpringBootTest
 class AppTest extends Specification {
 
-        @Autowired
-        private InvoiceService invoiceService
+    @Autowired
+    private InvoiceService invoiceService
 
     def "invoice service is crated"() {
         expect:

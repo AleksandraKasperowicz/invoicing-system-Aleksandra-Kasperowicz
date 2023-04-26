@@ -27,7 +27,7 @@ public class TaxCalculatorService {
   }
 
   public BigDecimal collectedVat(String taxIdentificationNumber) {
-    return database.visit(sellerPredicate(taxIdentificationNumber), InvoiceEntry::getValueVat);
+    return database.visit(sellerPredicate(taxIdentificationNumber), InvoiceEntry::getVatValue);
   }
 
   public BigDecimal paidVat(String taxIdentificationNumber) {
@@ -38,14 +38,14 @@ public class TaxCalculatorService {
     return Optional.ofNullable(invoiceEntry.getExpenseRelatedToCar())
         .map(Car::isPersonalUse)
         .map(personalCarUsage -> personalCarUsage ? BigDecimal.valueOf(5, 1) : BigDecimal.ONE)
-        .map(proportion -> invoiceEntry.getValueVat().multiply(proportion))
+        .map(proportion -> invoiceEntry.getVatValue().multiply(proportion))
         .map(value -> value.setScale(2, RoundingMode.FLOOR))
-        .orElse(invoiceEntry.getValueVat());
+        .orElse(invoiceEntry.getVatValue());
   }
 
   private BigDecimal getIncomeValueTakingIntoConsiderationPersonalCarUsage(InvoiceEntry invoiceEntry) {
     return invoiceEntry.getNetPrice()
-        .add(invoiceEntry.getValueVat())
+        .add(invoiceEntry.getVatValue())
         .subtract(getVatValueTakingIntoConsiderationPersonalCarUsage(invoiceEntry));
   }
 

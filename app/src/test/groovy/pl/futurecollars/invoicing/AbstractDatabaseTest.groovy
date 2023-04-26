@@ -60,7 +60,9 @@ abstract class AbstractDatabaseTest extends Specification {
             def index = it.getId() -1 as int
 // resetting is necessary because database query returns ids while we don't know ids in original invoice
             invoices.get(index).id = index + 1
-            it.getBuyer().id = index + 11
+            invoices.get(index).getBuyer().id = index + 11
+            it.getBuyer().id = index +11
+            invoices.get(index).getSeller().id = index + 1
             it.getSeller().id = index + 1
             assert it == invoices.get(index)
         }

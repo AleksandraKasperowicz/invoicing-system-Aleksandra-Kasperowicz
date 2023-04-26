@@ -54,6 +54,7 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     implementation "io.springfox:springfox-boot-starter:${springfoxVersion}"
     implementation "io.springfox:springfox-swagger-ui:${springfoxVersion}"
@@ -109,30 +110,50 @@ jacocoTestCoverageVerification {
             }
         }
     }
-}
-task testWithFileDatabase(type: Test) {
-    systemProperty 'spring.profiles.active', 'file'
-}
-
-task testWithMemoryDatabase(type: Test) {
-    systemProperty 'spring.profiles.active', 'memory'
-}
-
-task testWithSqlDatabase(type: Test) {
-    systemProperty 'spring.profiles.active', 'sql'
-
-task testWithPostgreSqlDatabase(type: Test) {
-    systemProperty 'spring.profiles.active', 'sql-pg'
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: 'pl/futurecollars/invoicing/jpa/**')
+        }))
     }
-}
-check.dependsOn testWithFileDatabase
-check.dependsOn testWithMemoryDatabase
-check.dependsOn testWithSqlDatabase
+    task testWithFileDatabase(type: Test) {
+        systemProperty 'spring.profiles.active', 'file'
+    }
 
-flyway {
-    driver = 'org.postgresql.Driver'
-    url = 'jdbc:postgresql://localhost:5432/invoicing'
-    user = 'postgres'
-    password = '4004'
+    task testWithMemoryDatabase(type: Test) {
+        systemProperty 'spring.profiles.active', 'memory'
+    }
+
+    task testWithSqlDatabase(type: Test) {
+        systemProperty 'spring.profiles.active', 'sql'
+    }
+    task testWithJpaDatabase(type: Test) {
+        systemProperty 'spring.profiles.active', 'jpa'
+    }
+
+    task testWithJpaFlywayDatabase(type: Test) {
+        systemProperty 'spring.profiles.active', 'jpa-flyway'
+    }
+
+    task testWithPostgreSqlDatabase(type: Test) {
+        systemProperty 'spring.profiles.active', 'sql-pg'
+    }
+
+    check.dependsOn testWithFileDatabase
+    check.dependsOn testWithMemoryDatabase
+    check.dependsOn testWithSqlDatabase
+    check.dependsOn testWithJpaDatabase
+    check.dependsOn testWithJpaFlywayDatabase
+
+    flyway {
+        driver = 'org.postgresql.Driver'
+        url = 'jdbc:postgresql://localhost:5432/invoicing'
+        user = 'postgres'
+        password = '4004'
+    }
+
+    String osName = System.getProperty("os.name").toLowerCase()
+    if (osName.contains("mac")) {
+        check.dependsOn testWithPostgreSqlDatabase
+    }
 }
 

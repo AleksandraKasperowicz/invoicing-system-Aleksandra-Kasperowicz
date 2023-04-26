@@ -2,19 +2,26 @@ package pl.futurecollars.invoicing.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Company {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @ApiModelProperty(value = "id", required = true)
-  private String id;
+  private Long id;
 
   @ApiModelProperty(value = "tax Identification", required = true, example = "555-444-33-22")
   private String taxIdentificationNumber;

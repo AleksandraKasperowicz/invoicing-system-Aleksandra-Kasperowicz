@@ -3,5 +3,5 @@ server:
 
 invoicing-system:
   database:
-    type: inmemory
+    type: memory
     dbPath:

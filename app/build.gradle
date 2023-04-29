@@ -118,7 +118,7 @@ jacocoTestCoverageVerification {
                 fileTree(dir: it, excludes: [
                         'pl/futurecollars/invoicing/db/jpa/**',
                         'pl/futurecollars/invoicing/db/mongo/**',
-                        'pl/futurecollars/invoicing/db/sql/**'
+ //                       'pl/futurecollars/invoicing/db/sql/**'
                 ])
             }))
     }

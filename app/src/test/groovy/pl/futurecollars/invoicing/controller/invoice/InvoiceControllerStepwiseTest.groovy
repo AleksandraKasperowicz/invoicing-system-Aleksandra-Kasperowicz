@@ -141,7 +141,7 @@ class InvoiceControllerStepwiseTest extends Specification {
                 .content(invoiceAsJson)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isNotFound())
+                .andExpect(status().isNoContent())
     }
 
 

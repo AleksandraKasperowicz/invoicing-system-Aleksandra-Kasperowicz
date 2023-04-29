@@ -12,5 +12,6 @@ spring:
       - "*:missing"
       - "*:pending"
 
-  invoicing-system:
-    database: sql
+invoicing-system:
+  database: sql
+

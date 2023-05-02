@@ -24,6 +24,7 @@ public class SpringFoxConfig {
         .apiInfo(apiInfo())
         .tags(
             new Tag("invoice-controller", "Controller with API to get, create, update and delete INVOICES"),
+            new Tag("company-controller", "Controller used to list / add / update / delete companies."),
             new Tag("tax-controller", "Controller used to calculate taxes.")
         )
         .apiInfo(apiInfo());

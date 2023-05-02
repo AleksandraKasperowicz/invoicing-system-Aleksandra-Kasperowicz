@@ -6,7 +6,7 @@ import spock.lang.Specification
 
 class JsonServiceTest extends Specification {
 
-    JsonService service;
+
     def "should convert to json and read file"() {
         given:
         def jsonService = new JsonService()

@@ -14,6 +14,6 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
   profiles:
-      active: mongo
+      active: file
   flyway:
       enabled: false

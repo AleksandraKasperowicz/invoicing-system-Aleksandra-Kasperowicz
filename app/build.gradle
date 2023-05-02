@@ -4,7 +4,7 @@ buildscript {
         mongoVersion = '3.12.8'
         lombokVersion = '1.18.24'
         spockVersion = '2.0-groovy-3.0'
-        springBootVersion = '2.7.8'
+        springBootVersion = '2.4.2'
         springDependencyManagmentVersion = '1.1.0'
         groovyVersion = '3.0.9'
         fasterxmlVersion = '2.11.1'
@@ -52,6 +52,8 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-databind:${fasterxmlVersion}"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${fasterxmlVersion}"
 
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.security:spring-security-test"
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -113,14 +115,15 @@ jacocoTestCoverageVerification {
             }
         }
     }
-        afterEvaluate {
-            classDirectories.setFrom(files(classDirectories.files.collect {
-                fileTree(dir: it, excludes: [
-                        'pl/futurecollars/invoicing/db/jpa/**',
-                        'pl/futurecollars/invoicing/db/mongo/**',
- //                       'pl/futurecollars/invoicing/db/sql/**'
-                ])
-            }))
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+             fileTree(dir: it, excludes: [
+                     'pl/futurecollars/invoicing/db/jpa/*',
+                     'pl/futurecollars/invoicing/db/mongo/*',
+                     'pl/futurecollars/invoicing/config/*',
+                     'pl/futurecollars/invoicing/db/sql/*'
+             ])
+        }))
     }
 }
 

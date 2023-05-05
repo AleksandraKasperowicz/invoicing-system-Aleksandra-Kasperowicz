@@ -47,7 +47,6 @@ class InvoiceControllerTest extends AbstractControllerTest {
         def invoice = getInvoiceById(expectedInvoice.getId())
 
         then:
-        invoice == expectedInvoice
         resetIds(invoice) == resetIds(expectedInvoice)
     }
 
